@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milos Jarcov — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050505;--card:#111;--w:#f0f0f0;--dim:#777;--faint:#3a3a3a;--gb:rgba(255,255,255,.05);--gbo:rgba(255,255,255,.06);--green:#4ade80;--serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--w);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+a,button{cursor:none}
+
+/* PROGRESS */
+.prog{position:fixed;top:0;left:0;height:2px;background:#fff;z-index:10001;width:0;box-shadow:0 0 8px rgba(255,255,255,.4)}
+
+/* CURSOR */
+.cd{position:fixed;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+.cr{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.35);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),border-color .3s}
+.cd.h{width:16px;height:16px}.cr.h{width:56px;height:56px;border-color:rgba(255,255,255,.7)}
+
+/* OVERLAYS */
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px);pointer-events:none;z-index:9999}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.018'/%3E%3C/svg%3E");pointer-events:none;z-index:10000}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#fff;border-radius:10px}
+a{color:inherit;text-decoration:none}
+
+/* BG LAYERS */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+.flowbg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.45}
+.flowbg svg{width:100%;height:100%}
+.fl{fill:none;stroke-linecap:round;animation:fld linear infinite}
+@keyframes fld{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-2000}}
+.page{position:relative;z-index:2}
+
+/* ========== NAV — centered pill ========== */
+nav{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:1000;padding-top:1rem;transition:transform .4s var(--ease)}
+nav.hide{transform:translateX(-50%) translateY(-120%)}
+.npill{display:flex;align-items:center;gap:.2rem;background:rgba(255,255,255,.03);border:1px solid var(--gbo);backdrop-filter:blur(24px) saturate(1.4);padding:4px;border-radius:100px;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.npill a{position:relative;font-size:.78rem;font-weight:600;padding:.5rem 1.3rem;border-radius:100px;color:var(--dim);transition:color .3s;white-space:nowrap}
+.npill a:hover{color:var(--w)}
+.npill a.act{color:#fff}
+.tb{position:absolute;inset:0;border-radius:100px;background:rgba(255,255,255,.06);z-index:-1;opacity:0;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.npill a.act .tb{opacity:1}
+.tg{position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:2rem;height:3px;border-radius:3px 3px 0 0;background:#fff;opacity:0;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.npill a.act .tg{opacity:1}
+.th{position:absolute;top:-8px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .35s;pointer-events:none}
+.npill a.act .th{opacity:1}
+.th i{position:absolute;border-radius:100%;left:50%;transform:translateX(-50%)}
+.th .h1{width:3rem;height:1.5rem;background:rgba(255,255,255,.1);filter:blur(6px);top:0}
+.th .h2{width:2rem;height:1.2rem;background:rgba(255,255,255,.08);filter:blur(4px);top:2px}
+
+/* ========== LANG SELECTOR — BELOW nav, centered ========== */
+.lang{position:fixed;top:4.5rem;left:50%;transform:translateX(-50%);z-index:999;transition:transform .4s var(--ease),opacity .4s}
+nav.hide~.lang{transform:translateX(-50%) translateY(-140%);opacity:0}
+.lbtn{display:flex;align-items:center;gap:.35rem;padding:.35rem .8rem;border-radius:100px;border:1px solid var(--gbo);background:rgba(255,255,255,.03);backdrop-filter:blur(16px);color:var(--dim);font-size:.68rem;font-weight:600;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:none;transition:all .3s var(--ease)}
+.lbtn:hover{border-color:rgba(255,255,255,.12);color:#fff}
+.lbtn svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s;opacity:.5}
+.lang.open .lbtn svg{transform:rotate(180deg)}
+.ldrop{position:absolute;top:calc(100% + .4rem);left:50%;transform:translateX(-50%) translateY(-6px) scale(.96);min-width:120px;border-radius:10px;border:1px solid var(--gbo);background:rgba(10,10,10,.92);backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.6);overflow:hidden;opacity:0;pointer-events:none;transition:all .25s var(--ease)}
+.lang.open .ldrop{opacity:1;transform:translateX(-50%) translateY(0) scale(1);pointer-events:auto}
+.lopt{display:flex;align-items:center;gap:.4rem;width:100%;padding:.5rem .8rem;border:none;background:0;color:var(--dim);font-size:.75rem;font-weight:500;text-align:left;transition:all .2s;cursor:none}
+.lopt:hover{background:rgba(255,255,255,.05);color:#fff}
+.lopt.on{color:#fff;font-weight:600}
+.lopt svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;margin-left:auto;opacity:0}
+.lopt.on svg{opacity:1}
+
+/* ========== SEC NUMS ========== */
+.sn{position:absolute;right:4rem;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(8rem,15vw,14rem);color:rgba(255,255,255,.02);pointer-events:none;line-height:1;letter-spacing:-.05em;user-select:none}
+
+/* ========== HERO ========== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 2rem;position:relative;overflow:hidden}
+.hud{position:absolute;inset:3rem;pointer-events:none}
+.hud::before,.hud::after,.hud b::before,.hud b::after{content:'';position:absolute;width:40px;height:40px;border-color:rgba(255,255,255,.08);border-style:solid}
+.hud::before{top:0;left:0;border-width:1px 0 0 1px}
+.hud::after{top:0;right:0;border-width:1px 1px 0 0}
+.hud b::before{bottom:0;left:0;border-width:0 0 1px 1px}
+.hud b::after{bottom:0;right:0;border-width:0 1px 1px 0}
+
+.hstat{display:inline-flex;align-items:center;gap:.7rem;margin-bottom:2.5rem;opacity:0;animation:fi .8s var(--ease) .2s forwards}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(74,222,128,.7),0 0 24px rgba(74,222,128,.3);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:1}50%{opacity:.3}}
+.stxt{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green)}
+
+/* NAME + WAVE */
+.hname{font-family:var(--serif);font-size:clamp(3.5rem,9vw,8rem);font-weight:400;line-height:.95;letter-spacing:-.04em;margin-bottom:.5rem;position:relative;opacity:0;animation:fi 1s var(--ease) .4s forwards}
+.hname .ol{-webkit-text-stroke:1px rgba(255,255,255,.25);color:transparent}
+.wv{display:inline-block}.wv .wc{display:inline-block;transition:transform .4s var(--ease)}.wv:hover .wc{animation:wup .5s var(--ease) forwards}
+@keyframes wup{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-6px) scale(1.12)}70%{transform:translateY(1px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+
+/* Glitch */
+.gli{position:relative}
+.gli::before,.gli::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}
+.gli::before{color:rgba(255,255,255,.03);animation:g1 4s infinite linear alternate-reverse;clip-path:inset(0 0 70% 0)}
+.gli::after{color:rgba(255,255,255,.02);animation:g2 3s infinite linear alternate-reverse;clip-path:inset(60% 0 0 0)}
+@keyframes g1{0%,90%{transform:translate(0)}92%{transform:translate(-3px,1px)}94%{transform:translate(2px,-1px)}96%{transform:translate(-1px,2px)}98%{transform:translate(3px,0)}100%{transform:translate(0)}}
+@keyframes g2{0%,85%{transform:translate(0)}87%{transform:translate(2px,-2px)}89%{transform:translate(-3px,1px)}91%{transform:translate(1px,1px)}93%{transform:translate(-2px,-1px)}100%{transform:translate(0)}}
+
+/* TYPEWRITER */
+.hrole{font-size:1.2rem;color:var(--dim);margin-bottom:.6rem;height:2rem;opacity:0;animation:fi .8s var(--ease) .6s forwards}
+.hrole .typed{color:#fff;font-weight:500;border-right:2px solid #fff;padding-right:3px;animation:blk .7s step-end infinite}
+@keyframes blk{0%,100%{border-color:#fff}50%{border-color:transparent}}
+
+.hdesc{font-size:.95rem;color:var(--dim);max-width:480px;line-height:1.8;margin-bottom:3rem;opacity:0;animation:fi .8s var(--ease) .8s forwards}
+.hbtns{display:flex;gap:1.2rem;margin-bottom:3rem;opacity:0;animation:fi .8s var(--ease) 1s forwards}
+
+/* GLASS BTN */
+.gb{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2.2rem;font-size:.82rem;font-weight:600;letter-spacing:.05em;border-radius:100px;border:1px solid rgba(255,255,255,.08);color:#fff;position:relative;overflow:hidden;background:rgba(255,255,255,.04);backdrop-filter:blur(20px) saturate(1.5);box-shadow:0 0 0 .5px rgba(255,255,255,.05),inset 1.5px 1.5px 1px rgba(255,255,255,.08),inset -1.5px -1.5px 1px rgba(255,255,255,.08),inset 0 0 12px 4px rgba(255,255,255,.02),0 4px 16px rgba(0,0,0,.3);transition:all .35s var(--ease)}
+.gb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent 60%);border-radius:inherit}
+.gb::after{content:'';position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:skewX(-20deg);transition:left .6s var(--ease)}
+.gb:hover::after{left:130%}
+.gb:hover{transform:translateY(-3px) scale(1.04);border-color:rgba(255,255,255,.15);box-shadow:0 0 0 .5px rgba(255,255,255,.1),inset 2px 2px 1px rgba(255,255,255,.12),inset -2px -2px 1px rgba(255,255,255,.12),0 8px 32px rgba(0,0,0,.4),0 0 40px rgba(255,255,255,.03)}
+.gb:active{transform:translateY(1px) scale(.97)}
+.gb span{position:relative;z-index:1}
+.gb.pri{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+
+.hsoc{display:flex;gap:1rem;opacity:0;animation:fi .8s var(--ease) 1.2s forwards}
+.si{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gb);border:1px solid var(--gbo);backdrop-filter:blur(10px);box-shadow:inset 1px 1px 1px rgba(255,255,255,.05),inset -1px -1px 1px rgba(255,255,255,.05);color:var(--dim);transition:all .3s var(--ease)}
+.si svg{width:16px;height:16px;fill:currentColor}
+.si:hover{color:#fff;transform:translateY(-3px) scale(1.1);border-color:rgba(255,255,255,.15)}
+
+.hscr{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--faint);font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:fi 1s var(--ease) 1.6s forwards}
+.sln{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);animation:slp 2s ease-in-out infinite}
+@keyframes slp{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.6)}}
+
+/* 3D GLOBE */
+#globe{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:420px;height:420px;pointer-events:none;opacity:.5}
+
+@keyframes fi{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* TICKER */
+.tkw{overflow:hidden;border-top:1px solid var(--gbo);border-bottom:1px solid var(--gbo);background:rgba(255,255,255,.01);padding:1rem 0}
+.tk{display:flex;gap:4rem;animation:tka 30s linear infinite;width:max-content}
+.ti{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.ti .sep{color:rgba(255,255,255,.12)}
+@keyframes tka{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:8rem 4rem;max-width:1200px;margin:0 auto;position:relative}
+.rv{opacity:0;transform:translateY(70px);transition:opacity 1s var(--ease),transform 1s var(--ease)}.rv.on{opacity:1;transform:translateY(0)}
+.rc{opacity:0;transform:translateY(40px);filter:blur(6px);transition:all .8s var(--ease)}.rc.on{opacity:1;transform:translateY(0);filter:blur(0)}
+.wh{position:relative;display:inline-block;clip-path:inset(-20% 100% -20% 0);transition:clip-path 1.2s var(--ease)}.wh.on{clip-path:inset(-20% -5% -20% 0)}
+.sin{opacity:0;transform:scale(.92);transition:all 1s var(--ease)}.sin.on{opacity:1;transform:scale(1)}
+.sll{opacity:0;transform:translateX(-80px);transition:all 1s var(--ease)}.sll.on{opacity:1;transform:translateX(0)}
+.slr{opacity:0;transform:translateX(80px);transition:all 1s var(--ease)}.slr.on{opacity:1;transform:translateX(0)}
+
+.stag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem}
+.stag::before{content:'';width:32px;height:1px;background:linear-gradient(90deg,#fff,transparent)}
+.sh{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:400;letter-spacing:-.03em;line-height:1.25;margin-bottom:.8rem;padding-bottom:.1em}
+.sh em{font-style:italic;color:var(--dim)}
+.ss{color:var(--dim);font-size:.92rem;max-width:500px;line-height:1.8;margin-bottom:4rem}
+.hl{position:relative;max-width:1200px;margin:0 auto;padding:0 4rem}.hl::before{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06) 20%,rgba(255,255,255,.06) 80%,transparent)}
+
+/* ABOUT */
+.abg{display:grid;grid-template-columns:1.2fr .8fr;gap:5rem;align-items:start}
+.abt p{color:var(--dim);font-size:.92rem;line-height:1.85;margin-bottom:1.2rem}
+.abt strong{color:#fff;font-weight:500}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mc{background:var(--card);border:1px solid var(--gbo);border-radius:12px;padding:1.8rem;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .4s}
+.mc:hover::before{opacity:1}
+.mc:hover{border-color:rgba(255,255,255,.1);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.mn{font-family:var(--serif);font-size:2.2rem;line-height:1;margin-bottom:.3rem}
+.ml{font-size:.72rem;color:var(--dim);letter-spacing:.06em;font-weight:500}
+
+/* SKILLS */
+.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.sk{background:var(--card);border:1px solid var(--gbo);border-radius:12px;padding:2rem 1.2rem;text-align:center;transition:all .5s var(--ease);position:relative;overflow:hidden;opacity:0;transform:translateY(40px) rotateX(10deg);perspective:600px}
+.sk.vis{opacity:1;transform:translateY(0) rotateX(0)}
+.sk::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.04),transparent 55%);opacity:0;transition:opacity .4s}
+.sk:hover::after{opacity:1}
+.sk:hover{border-color:rgba(255,255,255,.12);box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 40px rgba(255,255,255,.02)}
+.ski{font-family:var(--mono);font-size:1.1rem;font-weight:500;display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:.6rem;position:relative;z-index:1}
+.skn{font-family:var(--mono);font-weight:500;font-size:.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.15rem;position:relative;z-index:1}
+.skl{font-family:var(--mono);font-size:.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:.12em;position:relative;z-index:1}
+
+/* PROJECTS */
+.pe{background:var(--card);border:1px dashed rgba(255,255,255,.06);border-radius:16px;padding:6rem 2rem;text-align:center;position:relative;overflow:hidden}
+.pe::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(255,255,255,.02),transparent 50%)}
+.pe>*{position:relative;z-index:1}
+.pei{width:64px;height:64px;margin:0 auto 1.2rem;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.pe h3{font-family:var(--serif);font-size:1.4rem;margin-bottom:.5rem}
+.pe p{color:var(--dim);font-size:.88rem;max-width:380px;margin:0 auto;line-height:1.7}
+
+/* EDUCATION */
+.etl{position:relative;padding-left:3.5rem}
+.etl::before{content:'';position:absolute;top:0;bottom:0;left:12px;width:1px;background:linear-gradient(to bottom,rgba(255,255,255,.3),rgba(255,255,255,.05) 60%,transparent)}
+.ec{position:relative;background:var(--card);border:1px solid var(--gbo);border-radius:14px;padding:2.4rem 2.8rem;transition:all .4s var(--ease);margin-bottom:1.5rem}
+.ec:last-child{margin-bottom:0}
+.ec:hover{border-color:rgba(255,255,255,.1);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.ed{position:absolute;left:-3.5rem;top:2.6rem;transform:translateX(calc(-50% + 12px));width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.3);border:2px solid var(--bg)}
+.ey{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:.4rem}
+.edeg{font-family:var(--serif);font-size:1.4rem;margin-bottom:.25rem}
+.esch{color:var(--dim);font-weight:500;font-size:.9rem;margin-bottom:.7rem}
+.einf{color:var(--dim);font-size:.85rem;line-height:1.75}
+
+/* CONTACT */
+.ctc{background:var(--card);border:1px solid var(--gbo);border-radius:20px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.ctc::before{content:'';position:absolute;width:150%;height:150%;top:-25%;left:-25%;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.03),transparent 35%),radial-gradient(circle at 70% 60%,rgba(255,255,255,.02),transparent 35%);animation:ctf 14s ease-in-out infinite alternate}
+@keyframes ctf{0%{transform:translate(-5%,-5%) rotate(0)}100%{transform:translate(5%,5%) rotate(2deg)}}
+.ctc>*{position:relative;z-index:2}
+.ctc .sh{margin-bottom:.6rem}
+.cts{color:var(--dim);font-size:.88rem;margin-bottom:1.8rem}
+.ctg{display:inline-flex;align-items:center;gap:.6rem;font-size:1rem;font-weight:500;color:#fff;padding:1rem 2.4rem;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,.08),inset -1.5px -1.5px 1px rgba(255,255,255,.08),0 4px 20px rgba(0,0,0,.3);transition:all .35s var(--ease);position:relative;overflow:hidden}
+.ctg::after{content:'';position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:skewX(-20deg);transition:left .5s var(--ease)}
+.ctg:hover::after{left:130%}
+.ctg:hover{transform:translateY(-3px) scale(1.03);border-color:rgba(255,255,255,.15);box-shadow:inset 2px 2px 1px rgba(255,255,255,.12),inset -2px -2px 1px rgba(255,255,255,.12),0 8px 40px rgba(0,0,0,.5),0 0 50px rgba(255,255,255,.03)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--gbo);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;font-size:.75rem;color:var(--faint)}
+.fr{display:flex;gap:2rem}.fr a{color:var(--dim);transition:color .3s}.fr a:hover{color:#fff}
+
+/* 3D TILT */
+.tilt{transform-style:preserve-3d;will-change:transform}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .skg{grid-template-columns:repeat(3,1fr)}
+  .sn{display:none}
+  #globe{display:none}
+  .abg{gap:3.5rem}
+}
+
+@media(max-width:768px){
+  /* Hide custom cursor on touch devices */
+  .cd,.cr{display:none}
+  body,a,button{cursor:auto}
+
+  /* Nav - scrollable pill */
+  nav{padding-top:.6rem;width:100%;left:0;transform:none;padding:0.6rem 0.5rem 0}
+  nav.hide{transform:translateY(-120%)}
+  .npill{padding:3px;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:center;flex-wrap:nowrap}
+  .npill::-webkit-scrollbar{display:none}
+  .npill a{font-size:.65rem;padding:.4rem .7rem;flex-shrink:0}
+
+  /* Lang selector */
+  .lang{top:3.5rem;left:auto;right:.75rem;transform:none}
+  nav.hide~.lang{transform:translateY(-140%);opacity:0}
+  .ldrop{left:auto;right:0;transform:translateY(-6px) scale(.96)}
+  .lang.open .ldrop{transform:translateY(0) scale(1)}
+
+  /* Hero */
+  .hero{padding:0 1.2rem;min-height:100svh}
+  .hud{inset:1rem}
+  .hud::before,.hud::after,.hud b::before,.hud b::after{width:24px;height:24px}
+  .hname{font-size:clamp(2.5rem,12vw,4rem)}
+  .hstat{margin-bottom:1.5rem}
+  .stxt{font-size:.6rem;letter-spacing:.12em}
+  .hrole{font-size:1rem}
+  .hdesc{font-size:.85rem;margin-bottom:2rem;line-height:1.7;max-width:100%}
+  .hbtns{flex-direction:column;gap:.8rem;width:100%;max-width:280px;margin-bottom:2rem}
+  .gb{padding:.75rem 1.8rem;font-size:.78rem;justify-content:center;width:100%}
+  .hsoc{gap:.8rem}
+  .si{width:38px;height:38px}
+  .hscr{bottom:1.5rem}
+
+  /* Sections */
+  section{padding:4rem 1.2rem}
+  .hl{padding:0 1.2rem}
+  .sh{font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.2}
+  .ss{font-size:.85rem;margin-bottom:2.5rem}
+  .stag{font-size:.6rem}
+
+  /* About */
+  .abg{grid-template-columns:1fr;gap:2rem}
+  .abt p{font-size:.85rem}
+  .mg{grid-template-columns:1fr 1fr;gap:.8rem}
+  .mc{padding:1.2rem}
+  .mn{font-size:1.6rem}
+  .ml{font-size:.65rem}
+
+  /* Skills */
+  .skg{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .sk{padding:1.5rem 1rem}
+  .ski{width:42px;height:42px;font-size:.95rem}
+
+  /* Projects */
+  .pe{padding:4rem 1.5rem}
+
+  /* Education */
+  .etl{padding-left:2rem}
+  .ed{left:-2rem}
+  .ec{padding:1.3rem 1.5rem;margin-bottom:1rem}
+  .edeg{font-size:1.15rem}
+  .esch{font-size:.82rem}
+  .einf{font-size:.8rem}
+
+  /* Contact */
+  .ctc{padding:2.5rem 1.2rem}
+  .cts{font-size:.82rem}
+  .ctg{padding:.8rem 1.5rem;font-size:.85rem}
+
+  /* Footer */
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.2rem}
+
+  /* Ticker */
+  .tkw{padding:.7rem 0}
+  .ti{font-size:.6rem}
+}
+
+@media(max-width:420px){
+  .npill a{font-size:.58rem;padding:.35rem .55rem}
+  .hname{font-size:clamp(2rem,11vw,3rem)}
+  .hrole{font-size:.9rem;height:1.6rem}
+  .hdesc{font-size:.8rem}
+  .skg{grid-template-columns:1fr 1fr;gap:.6rem}
+  .sk{padding:1.2rem .8rem}
+  .mg{gap:.6rem}
+  .mc{padding:1rem}
+  .mn{font-size:1.3rem}
+  .ec{padding:1.1rem 1.2rem}
+  .edeg{font-size:1rem}
+}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="cd" id="cD"></div>
+<div class="cr" id="cR"></div>
+<div class="scan"></div>
+<canvas id="particles"></canvas>
+<div class="flowbg" id="flowBg"></div>
+
+<div class="page">
+
+<!-- NAV -->
+<nav id="nav"><div class="npill">
+<a href="#" class="act" data-n="home"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.home">Home</span></a>
+<a href="#about" data-n="about"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.about">About</span></a>
+<a href="#skills" data-n="skills"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.skills">Skills</span></a>
+<a href="#projects" data-n="projects"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.projects">Projects</span></a>
+<a href="#education" data-n="education"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.education">Education</span></a>
+<a href="#contact" data-n="contact"><span class="tb"></span><span class="tg"></span><span class="th"><i class="h1"></i><i class="h2"></i></span><span data-i18n="nav.contact">Contact</span></a>
+</div></nav>
+
+<!-- LANG — below nav, centered -->
+<div class="lang" id="ls">
+<button class="lbtn" id="lb"><span id="lc">EN</span> <span id="ll">English</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+<div class="ldrop">
+<button class="lopt on" data-l="en"><span>EN</span><span>English</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></button>
+<button class="lopt" data-l="fr"><span>FR</span><span>Français</span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></button>
+</div></div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hud"><b></b></div>
+<canvas id="globe"></canvas>
+<div class="hstat"><span class="sdot"></span><span class="stxt wv" data-w data-i18n="hero.status">Available for Opportunities</span></div>
+<h1 class="hname gli" data-text="Milos Jarcov"><span class="wv" data-w>Milos</span> <span class="ol wv" data-w>Jarcov</span></h1>
+<div class="hrole"><span data-i18n="hero.role_prefix">I'm a </span><span class="typed" id="typed"></span></div>
+<p class="hdesc" data-i18n="hero.desc">CS student at Concordia University in Montreal. Into defense tech, systems programming, and figuring out how things work under the hood.</p>
+<div class="hbtns"><a href="#about" class="gb pri mag"><span data-i18n="hero.cta1">About Me</span></a><a href="#contact" class="gb mag"><span data-i18n="hero.cta2">Contact Me</span></a></div>
+<div class="hsoc">
+<a href="https://github.com/milosjarcov" target="_blank" class="si mag"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+<a href="https://www.linkedin.com/in/milos-jarcov-6384a62ab/" target="_blank" class="si mag"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+<a href="https://mail.google.com/mail/?view=cm&to=milosjarcov.biz@gmail.com" target="_blank" class="si mag"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+</div>
+<div class="hscr"><span data-i18n="hero.scroll">Scroll</span><div class="sln"></div></div>
+</section>
+
+<div class="tkw"><div class="tk" id="tkr"></div></div>
+
+<div class="hl"></div>
+<section id="about"><div class="sn">01</div><div class="rv">
+<div class="stag rc wv" data-w data-i18n="about.tag">About</div>
+<div class="abg"><div class="abt">
+<h2 class="sh wh rc" style="--d:.1s" data-i18n="about.heading">Driven by<br><em>curiosity</em></h2>
+<p class="rc" style="--d:.2s" data-i18n="about.p1">I'm <strong>Milos Jarcov</strong>, a CS student at Concordia University in Montreal. I've always been into tech, even as a kid I was the one taking things apart just to see how they worked. That eventually led me to computer science, where I get to dig into everything from low-level C to building stuff with Python and Java.</p>
+<p class="rc" style="--d:.35s" data-i18n="about.p2">What really interests me is where tech meets defense. Autonomous systems, AI in aerospace, the kind of engineering that goes into companies like Lockheed Martin and Palantir. That's the direction I want to take my career.</p>
+<p class="rc" style="--d:.5s" data-i18n="about.p3">When I'm not coding, I'm usually at the gym, hooping, talking cars, gaming, or figuring out where to travel next. My friends would describe me as someone who stays calm under pressure, thinks logically, and always finds a way to make people laugh.</p>
+</div><div class="mg slr">
+<div class="mc tilt"><div class="mn">MTL</div><div class="ml" data-i18n="about.met1">Based in Montreal</div></div>
+<div class="mc tilt"><div class="mn counter" data-target="5">0</div><div class="ml" data-i18n="about.met2">Languages</div></div>
+<div class="mc tilt"><div class="mn">CS</div><div class="ml" data-i18n="about.met3">Concordia University</div></div>
+<div class="mc tilt"><div class="mn">∞</div><div class="ml" data-i18n="about.met4">Drive</div></div>
+</div></div></div></section>
+
+<div class="hl"></div>
+<section id="skills"><div class="sn">02</div><div class="rv">
+<div class="stag rc wv" data-w data-i18n="skills.tag">Skills</div>
+<h2 class="sh wh rc" style="--d:.1s" data-i18n="skills.heading">Languages &<br><em>Technologies</em></h2>
+<p class="ss rc" style="--d:.2s" data-i18n="skills.sub">My current toolkit — growing every semester.</p>
+<div class="skg">
+<div class="sk tilt"><div class="ski">Py</div><div class="skn">Python</div><div class="skl" data-i18n="skills.proficient">Proficient</div></div>
+<div class="sk tilt"><div class="ski">Jv</div><div class="skn">Java</div><div class="skl" data-i18n="skills.proficient">Proficient</div></div>
+<div class="sk tilt"><div class="ski">Cj</div><div class="skn">Clojure</div><div class="skl" data-i18n="skills.learning">Learning</div></div>
+<div class="sk tilt"><div class="ski">C++</div><div class="skn">C++</div><div class="skl" data-i18n="skills.learning">Learning</div></div>
+<div class="sk tilt"><div class="ski">C</div><div class="skn">C</div><div class="skl" data-i18n="skills.learning">Learning</div></div>
+<div class="sk tilt"><div class="ski">&lt;/&gt;</div><div class="skn">HTML / CSS / JS</div><div class="skl" data-i18n="skills.learning">Learning</div></div>
+</div></div></section>
+
+<div class="hl"></div>
+<section id="projects"><div class="sn">03</div><div class="rv">
+<div class="stag rc wv" data-w data-i18n="proj.tag">Projects</div>
+<h2 class="sh wh rc" style="--d:.1s" data-i18n="proj.heading">Selected<br><em>Work</em></h2>
+<p class="ss rc" style="--d:.2s" data-i18n="proj.sub">Projects coming soon — currently building.</p>
+<div class="pe sin"><div class="pei">🚧</div><h3 data-i18n="proj.soon">Under Construction</h3><p data-i18n="proj.soon_desc">Currently building projects to showcase here. Check back soon or connect with me to stay updated.</p></div>
+</div></section>
+
+<div class="hl"></div>
+<section id="education"><div class="sn">04</div><div class="rv">
+<div class="stag rc wv" data-w data-i18n="edu.tag">Education</div>
+<h2 class="sh wh rc" style="--d:.1s" data-i18n="edu.heading">Academic<br><em>Background</em></h2>
+<p class="ss rc" style="--d:.2s" data-i18n="edu.sub">A structured path from high school to university, building strong foundations at every stage.</p>
+<div class="etl sll">
+<div class="ec tilt"><div class="ed"></div><div class="ey">2023 — 2027</div><div class="edeg" data-i18n="edu.deg1">Bachelor of Computer Science</div><div class="esch" data-i18n="edu.sch1">Concordia University, Montreal</div><p class="einf" data-i18n="edu.inf1">Coursework includes data structures &amp; algorithms, object-oriented programming (Java), systems programming (C/C++), and functional programming with Clojure.</p></div>
+<div class="ec tilt"><div class="ed"></div><div class="ey">2020 — 2023</div><div class="edeg" data-i18n="edu.deg2">DEC in Social Sciences with Math</div><div class="esch" data-i18n="edu.sch2">John Abbott College, Montreal</div><p class="einf" data-i18n="edu.inf2">Dean's List member. Developed strong analytical and quantitative reasoning skills that carry into my CS work today.</p></div>
+<div class="ec tilt"><div class="ed"></div><div class="ey">2015 — 2020</div><div class="edeg" data-i18n="edu.deg3">High School Diploma — IB MYP</div><div class="esch" data-i18n="edu.sch3">Des Sources High School, Montreal</div><p class="einf" data-i18n="edu.inf3">Completed the International Baccalaureate Middle Years Programme (MYP), building a global perspective and disciplined study habits early on.</p></div>
+</div></div></section>
+
+<div class="hl"></div>
+<section id="contact"><div class="sn">05</div><div class="rv"><div class="ctc sin">
+<div class="stag rc wv" data-w data-i18n="contact.tag">Contact</div>
+<h2 class="sh wh rc" style="--d:.1s" data-i18n="contact.heading">Let's Connect</h2>
+<p class="cts rc" style="--d:.2s" data-i18n="contact.sub">Interested in collaborating, have an opportunity, or just want to chat?</p>
+<div class="rc" style="--d:.35s"><a href="https://mail.google.com/mail/?view=cm&to=milosjarcov.biz@gmail.com" target="_blank" class="ctg mag"><span>✉</span> milosjarcov.biz@gmail.com</a></div>
+</div></div></section>
+
+<footer><span>© 2026 Milos Jarcov</span><div class="fr"><a href="https://www.linkedin.com/in/milos-jarcov-6384a62ab/" target="_blank">LinkedIn</a><a href="https://github.com/milosjarcov" target="_blank">GitHub</a><a href="https://mail.google.com/mail/?view=cm&to=milosjarcov.biz@gmail.com" target="_blank">Email</a></div></footer>
+</div>
+
+<script>
+// ===== PARTICLES =====
+const cv=document.getElementById('particles'),cx=cv.getContext('2d');let W,H,pts=[];
+function rez(){W=cv.width=innerWidth;H=cv.height=innerHeight}rez();addEventListener('resize',rez);
+class Pt{constructor(){this.r()}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.s=Math.random()*1.5+.3;this.a=Math.random()*.25+.05}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<-10||this.x>W+10||this.y<-10||this.y>H+10)this.r()}d(){cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${this.a})`;cx.fill()}}
+for(let i=0;i<100;i++)pts.push(new Pt);
+function dL(){for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<110){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(255,255,255,${.025*(1-d/110)})`;cx.lineWidth=.5;cx.stroke()}}}
+function aP(){cx.clearRect(0,0,W,H);pts.forEach(p=>{p.u();p.d()});dL();requestAnimationFrame(aP)}aP();
+
+// ===== FLOWING PATHS =====
+(function(){const c=document.getElementById('flowBg'),s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 1600 900');s.setAttribute('preserveAspectRatio','xMidYMid slice');s.style.cssText='width:100%;height:100%';for(let z=0;z<2;z++)for(let i=0;i<26;i++){const p=document.createElementNS('http://www.w3.org/2000/svg','path'),dir=z?-1:1,sp=i*14*dir,yo=i*16;p.setAttribute('d',`M${-300+sp} ${-60+yo} C${280+sp*.5} ${140+yo*.4+z*120},${900+sp*.3} ${450+yo*.7-z*100},${1900+sp} ${960-yo*.3}`);p.setAttribute('stroke',`rgba(255,255,255,${.035+(i/26)*.07})`);p.setAttribute('stroke-width',String(.5+i*.04));p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');const l=1200+Math.random()*400;p.setAttribute('stroke-dasharray',`${l*.55} ${l*.45}`);p.classList.add('fl');const dur=22+Math.random()*16;p.style.animationDuration=dur+'s';p.style.animationDelay=-Math.random()*dur+'s';if(z)p.style.animationDirection='reverse';s.appendChild(p)}c.appendChild(s)})();
+
+// ===== 3D WIREFRAME GLOBE =====
+(function(){
+  const c=document.getElementById('globe'),ctx=c.getContext('2d');
+  c.width=420;c.height=420;
+  const R=160,cx0=210,cy0=210;let rot=0;
+  function drawGlobe(){
+    ctx.clearRect(0,0,420,420);
+    ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=.8;
+    // Longitude lines
+    for(let i=0;i<12;i++){
+      const ang=i*(Math.PI/6)+rot;
+      ctx.beginPath();
+      for(let j=0;j<=60;j++){
+        const phi=j*(Math.PI/60)-Math.PI/2;
+        const x=cx0+R*Math.cos(phi)*Math.sin(ang);
+        const y=cy0+R*Math.sin(phi);
+        j===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }ctx.stroke();
+    }
+    // Latitude lines
+    for(let i=1;i<6;i++){
+      const phi=(i/6)*Math.PI-Math.PI/2;
+      const r=R*Math.cos(phi);const yy=cy0+R*Math.sin(phi);
+      ctx.beginPath();
+      for(let j=0;j<=60;j++){
+        const ang=j*(Math.PI*2/60)+rot;
+        const x=cx0+r*Math.sin(ang);
+        j===0?ctx.moveTo(x,yy):ctx.lineTo(x,yy);
+      }ctx.stroke();
+    }
+    rot+=.003;
+    requestAnimationFrame(drawGlobe);
+  }
+  drawGlobe();
+})();
+
+// ===== CURSOR =====
+const cD=document.getElementById('cD'),cR=document.getElementById('cR');let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+function cL(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cD.style.left=mx+'px';cD.style.top=my+'px';cR.style.left=rx+'px';cR.style.top=ry+'px';requestAnimationFrame(cL)}cL();
+document.querySelectorAll('a,button,.gb,.npill a,.ctg,.si,.sk,.mc,.tilt,.lbtn,.lopt').forEach(el=>{el.addEventListener('mouseenter',()=>{cD.classList.add('h');cR.classList.add('h')});el.addEventListener('mouseleave',()=>{cD.classList.remove('h');cR.classList.remove('h')})});
+
+// ===== MAGNETIC =====
+document.querySelectorAll('.mag').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;b.style.transform=`translate(${x*.2}px,${y*.2}px) scale(1.03)`});
+  b.addEventListener('mouseleave',()=>{b.style.transform='';b.style.transition='transform .4s var(--ease)';setTimeout(()=>b.style.transition='',400)});
+});
+
+// ===== TICKER =====
+const ti=['Python','◆','Java','◆','C++','◆','C','◆','Clojure','◆','Algorithms','◆','Data Structures','◆','OOP','◆','Systems Programming','◆','Defense Tech','◆'];
+document.getElementById('tkr').innerHTML=[...ti,...ti].map(t=>`<span class="ti">${t==='◆'?'<span class="sep">◆</span>':t}</span>`).join('');
+
+// ===== WAVE TEXT =====
+function bw(el){const t=el.textContent;el.dataset.wo=t;el.innerHTML='';t.split('').forEach((c,i)=>{if(c===' ')el.appendChild(document.createTextNode(' '));else{const s=document.createElement('span');s.className='wc';s.textContent=c;s.style.animationDelay=(i*.03)+'s';el.appendChild(s)}})}
+document.querySelectorAll('[data-w]').forEach(el=>bw(el));
+document.querySelectorAll('.wv').forEach(el=>{el.addEventListener('mouseenter',()=>{el.querySelectorAll('.wc').forEach(c=>{c.style.animation='none';void c.offsetWidth;c.style.animation=''})})});
+// ===== TYPEWRITER =====
+const roles=['CS Student','Python Developer','Problem Solver','Java Programmer','Quick Learner','Future Defense Tech Engineer'];
+const tEl=document.getElementById('typed');let ri=0,ci=0,del=false;
+function tL(){const cur=roles[ri],spd=del?30:60;if(!del&&ci<=cur.length){tEl.textContent=cur.slice(0,ci);ci++;if(ci>cur.length){setTimeout(()=>{del=true;tL()},2000);return}}else if(del&&ci>=0){tEl.textContent=cur.slice(0,ci);ci--;if(ci<0){del=false;ri=(ri+1)%roles.length;ci=0;setTimeout(tL,400);return}}setTimeout(tL,spd)}
+setTimeout(tL,2000);
+
+// ===== SCROLL REVEALS =====
+const rO=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.08,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.rv,.sin,.sll,.slr').forEach(el=>rO.observe(el));
+const cO=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.rc').forEach((k,i)=>{setTimeout(()=>k.classList.add('on'),i*150)});cO.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>cO.observe(el));
+const wO=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');wO.unobserve(e.target)}})},{threshold:.3});
+document.querySelectorAll('.wh').forEach(el=>wO.observe(el));
+new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.sk').forEach((c,i)=>{setTimeout(()=>c.classList.add('vis'),i*130)})})},{threshold:.15}).observe(document.querySelector('.skg'));
+
+// ===== COUNTERS =====
+const ctO=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.ct){e.target.dataset.ct='1';const tgt=parseInt(e.target.dataset.target),suf=e.target.dataset.suffix||'',dur=1200,st=performance.now();function tk(now){const el=now-st,pr=Math.min(el/dur,1),ea=1-Math.pow(1-pr,4),v=Math.round(ea*tgt);e.target.textContent=v+suf;if(pr<1)requestAnimationFrame(tk);else e.target.textContent=tgt+suf}requestAnimationFrame(tk)}})},{threshold:.5});
+document.querySelectorAll('.counter').forEach(el=>ctO.observe(el));
+
+// ===== 3D TILT =====
+document.querySelectorAll('.tilt').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*12}deg) translateY(-4px)`;c.style.transition='transform .1s ease-out'});
+  c.addEventListener('mouseleave',()=>{c.style.transform='';c.style.transition='transform .5s var(--ease)'});
+});
+
+// ===== PROGRESS =====
+const pB=document.getElementById('prog');
+window.addEventListener('scroll',()=>{pB.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight))*100+'%'});
+
+// ===== NAV =====
+let lsy=0;const nv=document.getElementById('nav'),nls=document.querySelectorAll('.npill a[data-n]'),secs=['home','about','skills','projects','education','contact'];
+function sAN(id){nls.forEach(a=>{a.dataset.n===id?a.classList.add('act'):a.classList.remove('act')})}
+nls.forEach(a=>{a.addEventListener('click',()=>sAN(a.dataset.n))});
+const sEls=secs.map(id=>id==='home'?document.querySelector('.hero'):document.getElementById(id)).filter(Boolean);
+window.addEventListener('scroll',()=>{const sy=scrollY;if(sy>lsy&&sy>300)nv.classList.add('hide');else nv.classList.remove('hide');lsy=sy;let cur='home';sEls.forEach((s,i)=>{if(s.getBoundingClientRect().top<=innerHeight*.4)cur=secs[i]});sAN(cur)});
+
+// ===== PARALLAX SEC NUMS =====
+window.addEventListener('scroll',()=>{document.querySelectorAll('.sn').forEach(el=>{const o=(el.parentElement.getBoundingClientRect().top/innerHeight)*-40;el.style.transform=`translateY(calc(-50% + ${o}px))`})});
+
+// ===== i18n =====
+const i18n={en:{
+'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.projects':'Projects','nav.education':'Education','nav.contact':'Contact',
+'hero.status':'Available for Opportunities','hero.role_prefix':"I'm a ",
+'hero.desc':'CS student at Concordia University in Montreal. Into defense tech, systems programming, and figuring out how things work under the hood.',
+'hero.cta1':'About Me','hero.cta2':'Contact Me','hero.scroll':'Scroll',
+'about.tag':'About','about.heading':'Driven by<br><em>curiosity</em>',
+'about.p1':"I'm <strong>Milos Jarcov</strong>, a CS student at Concordia University in Montreal. I've always been into tech, even as a kid I was the one taking things apart just to see how they worked. That eventually led me to computer science, where I get to dig into everything from low-level C to building stuff with Python and Java.",
+'about.p2':"What really interests me is where tech meets defense. Autonomous systems, AI in aerospace, the kind of engineering that goes into companies like Lockheed Martin and Palantir. That's the direction I want to take my career.",
+'about.p3':"When I'm not coding, I'm usually at the gym, hooping, talking cars, gaming, or figuring out where to travel next. My friends would describe me as someone who stays calm under pressure, thinks logically, and always finds a way to make people laugh.",
+'about.met1':'Based in Montreal','about.met2':'Languages','about.met3':'Concordia University','about.met4':'Drive',
+'skills.tag':'Skills','skills.heading':'Languages &<br><em>Technologies</em>','skills.sub':'My current toolkit — growing every semester.','skills.proficient':'Proficient','skills.learning':'Learning',
+'proj.tag':'Projects','proj.heading':'Selected<br><em>Work</em>','proj.sub':'Projects coming soon — currently building.','proj.soon':'Under Construction','proj.soon_desc':'Currently building projects to showcase here. Check back soon or connect with me to stay updated.',
+'edu.tag':'Education','edu.heading':'Academic<br><em>Background</em>','edu.sub':'A structured path from high school to university, building strong foundations at every stage.',
+'edu.deg1':'Bachelor of Computer Science','edu.sch1':'Concordia University, Montreal','edu.inf1':'Coursework includes data structures & algorithms, object-oriented programming (Java), systems programming (C/C++), and functional programming with Clojure.',
+'edu.deg2':'DEC in Social Sciences with Math','edu.sch2':'John Abbott College, Montreal','edu.inf2':"Dean's List member. Developed strong analytical and quantitative reasoning skills that carry into my CS work today.",
+'edu.deg3':'High School Diploma — IB MYP','edu.sch3':'Des Sources High School, Montreal','edu.inf3':'Completed the International Baccalaureate Middle Years Programme (MYP), building a global perspective and disciplined study habits early on.',
+'contact.tag':'Contact','contact.heading':"Let's Connect",'contact.sub':'Interested in collaborating, have an opportunity, or just want to chat?',
+_roles:['CS Student','Python Developer','Problem Solver','Java Programmer','Quick Learner','Future Defense Tech Engineer'],
+_ticker:['Python','◆','Java','◆','C++','◆','C','◆','Clojure','◆','Algorithms','◆','Data Structures','◆','OOP','◆','Systems Programming','◆','Defense Tech','◆']
+},fr:{
+'nav.home':'Accueil','nav.about':'À propos','nav.skills':'Compétences','nav.projects':'Projets','nav.education':'Éducation','nav.contact':'Contact',
+'hero.status':'Disponible pour des opportunités','hero.role_prefix':'Je suis ',
+'hero.desc':"Étudiant en informatique à Concordia, Montréal. Intéressé par la tech de défense, la programmation système, et comprendre comment les choses fonctionnent.",
+'hero.cta1':'À propos','hero.cta2':'Me contacter','hero.scroll':'Défiler',
+'about.tag':'À propos','about.heading':'Guidé par la<br><em>curiosité</em>',
+'about.p1':"Je suis <strong>Milos Jarcov</strong>, étudiant en informatique à l'Université Concordia à Montréal. J'ai toujours été dans la tech, même petit je démontais tout juste pour comprendre comment ça marchait. Ça m'a naturellement amené vers l'informatique, où j'explore autant le C bas niveau que Python et Java.",
+'about.p2':"Ce qui m'intéresse vraiment, c'est là où la tech rencontre la défense. Les systèmes autonomes, l'IA dans l'aérospatiale, le genre d'ingénierie qu'on retrouve chez Lockheed Martin ou Palantir. C'est la direction que je veux prendre.",
+'about.p3':"Quand je code pas, je suis au gym, je joue au basket, je parle de chars, je game, ou je planifie mon prochain voyage. Mes amis diraient que je suis quelqu'un de calme sous pression, logique, et qui trouve toujours le moyen de faire rire le monde.",
+'about.met1':'Basé à Montréal','about.met2':'Langages','about.met3':'Université Concordia','about.met4':'Détermination',
+'skills.tag':'Compétences','skills.heading':'Langages &<br><em>Technologies</em>','skills.sub':'Ma boîte à outils actuelle — qui grandit chaque semestre.','skills.proficient':'Maîtrisé','skills.learning':'En apprentissage',
+'proj.tag':'Projets','proj.heading':'Travaux<br><em>Sélectionnés</em>','proj.sub':'Projets à venir — en cours de construction.','proj.soon':'En construction','proj.soon_desc':"Je construis actuellement des projets à présenter ici. Revenez bientôt ou contactez-moi pour rester informé.",
+'edu.tag':'Éducation','edu.heading':'Parcours<br><em>Académique</em>','edu.sub':"Un parcours structuré du secondaire à l'université, construisant des bases solides à chaque étape.",
+'edu.deg1':"Baccalauréat en informatique",'edu.sch1':'Université Concordia, Montréal','edu.inf1':"Les cours comprennent structures de données et algorithmes, programmation orientée objet (Java), programmation système (C/C++) et programmation fonctionnelle avec Clojure.",
+'edu.deg2':'DEC en Sciences sociales avec mathématiques','edu.sch2':'Collège John Abbott, Montréal','edu.inf2':"Membre du tableau d'honneur du doyen. Développement de solides compétences analytiques et quantitatives qui enrichissent mon travail en informatique.",
+'edu.deg3':"Diplôme d'études secondaires — PEI du BI",'edu.sch3':'École secondaire Des Sources, Montréal','edu.inf3':"Complétion du Programme d'éducation intermédiaire (PEI) du Baccalauréat International, développant une perspective mondiale et des habitudes d'étude rigoureuses.",
+'contact.tag':'Contact','contact.heading':'Connectons-nous','contact.sub':"Intéressé par une collaboration, une opportunité, ou simplement envie de discuter ?",
+_roles:["Étudiant en informatique","Développeur Python","Résolveur de problèmes","Programmeur Java","Apprenant rapide","Futur ingénieur en tech de défense"],
+_ticker:['Python','◆','Java','◆','C++','◆','C','◆','Clojure','◆','Algorithmes','◆','Structures de données','◆','POO','◆','Programmation système','◆','Tech de défense','◆']
+}};
+let cLang='en';
+function aLang(lang){cLang=lang;const t=i18n[lang];
+document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(t[k]){if(el.hasAttribute('data-w')||el.hasAttribute('data-wh')){el.textContent=t[k];bw(el)}else if(t[k].includes('<'))el.innerHTML=t[k];else el.textContent=t[k]}});
+roles.length=0;roles.push(...t._roles);ri=0;ci=0;del=false;
+const td=t._ticker;document.getElementById('tkr').innerHTML=[...td,...td].map(x=>`<span class="ti">${x==='◆'?'<span class="sep">◆</span>':x}</span>`).join('');
+document.querySelectorAll('.counter[data-suffix]').forEach(el=>{el.dataset.suffix=lang==='fr'?'e':'nd'})}
+
+// LANG SWITCHER
+const ls=document.getElementById('ls'),lb=document.getElementById('lb'),lc=document.getElementById('lc'),ll=document.getElementById('ll'),los=document.querySelectorAll('.lopt');
+lb.addEventListener('click',()=>ls.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!ls.contains(e.target))ls.classList.remove('open')});
+los.forEach(o=>{o.addEventListener('click',()=>{const l=o.dataset.l;los.forEach(x=>x.classList.remove('on'));o.classList.add('on');lc.textContent=o.querySelector('span:first-child').textContent;ll.textContent=o.querySelector('span:nth-child(2)').textContent;ls.classList.remove('open');aLang(l)})});
+</script>
+</body>
+</html>
