@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milos Jarcov | CS Student & Software Developer</title>
+<meta name="description" content="Milos Jarcov, Computer Science student at Concordia University in Montréal. Java, Python, C/C++, systems programming. Portfolio, projects and contact.">
+<meta name="theme-color" content="#f6f4ee">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://milosjarcov.github.io">
+<meta property="og:title" content="Milos Jarcov | CS Student & Software Developer">
+<meta property="og:description" content="Computer Science student at Concordia University in Montréal. Portfolio, projects and contact.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f6f4ee'/%3E%3Crect x='2' y='2' width='60' height='60' fill='none' stroke='%231c1e21' stroke-width='2.5'/%3E%3Ctext x='32' y='42' font-family='monospace' font-weight='bold' font-size='24' fill='%23c13a2a' text-anchor='middle'%3EMJ%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Milos Jarcov","url":"https://milosjarcov.github.io","jobTitle":"Computer Science Student","affiliation":{"@type":"CollegeOrUniversity","name":"Concordia University"},"sameAs":["https://github.com/milosjarcov","https://www.linkedin.com/in/milosjarcov"]}
+</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--paper:#f6f4ee;
+--ink:#1c1e21;
+--ink2:#585c61;
+--ink3:#9a9d99;
+--line:#1c1e21;
+--hair:rgba(28,30,33,.18);
+--grid:rgba(92,118,148,.10);
+--gridM:rgba(92,118,148,.16);
+--red:#c13a2a;
+--redsoft:rgba(193,58,42,.07);
+--cond:'IBM Plex Sans Condensed',sans-serif;
+--sans:'IBM Plex Sans',sans-serif;
+--mono:'IBM Plex Mono',monospace;
+--frame:16px;
+--ease:cubic-bezier(.2,.8,.2,1);
+}
+html{scroll-behavior:smooth}
+body{background:
+repeating-linear-gradient(0deg,var(--gridM) 0 1px,transparent 1px 120px),
+repeating-linear-gradient(90deg,var(--gridM) 0 1px,transparent 1px 120px),
+repeating-linear-gradient(0deg,var(--grid) 0 1px,transparent 1px 24px),
+repeating-linear-gradient(90deg,var(--grid) 0 1px,transparent 1px 24px),
+var(--paper);
+color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--red);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+img,svg{display:block}
+
+/* ===== SHEET FRAME ===== */
+.frame{position:fixed;inset:var(--frame);border:1.5px solid var(--line);pointer-events:none;z-index:500}
+.frame::before{content:'';position:absolute;inset:5px;border:.5px solid var(--hair)}
+.zt{position:absolute;font-family:var(--mono);font-size:.5rem;color:var(--ink3);letter-spacing:.05em;user-select:none}
+
+/* ===== HEADER ===== */
+header{position:fixed;top:var(--frame);left:var(--frame);right:var(--frame);z-index:600;background:var(--paper);border:1.5px solid var(--line);border-bottom-width:1.5px;display:flex;align-items:stretch;justify-content:space-between;font-family:var(--mono)}
+.hdwg{display:flex;align-items:center;gap:.8rem;padding:.65rem 1.1rem;border-right:1px solid var(--hair);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
+.hdwg b{color:var(--ink);font-weight:600}
+.hnav{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+.hnav::-webkit-scrollbar{display:none}
+.hnav a{display:flex;align-items:center;padding:.65rem .95rem;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);border-left:1px solid var(--hair);position:relative;white-space:nowrap;transition:color .25s}
+.hnav a:hover{color:var(--ink)}
+.hnav a.act{color:var(--red)}
+.hnav a::after{content:'';position:absolute;left:.95rem;right:.95rem;bottom:6px;height:1.5px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease),background .3s}
+.hnav a:hover::after{transform:scaleX(1)}
+.hnav a.act::after{transform:scaleX(1);background:var(--red)}
+.hlang{display:flex;align-items:stretch;border-left:1px solid var(--hair)}
+.hlang button{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:0 .8rem;background:none;border:none;color:var(--ink3);cursor:pointer;transition:all .25s;border-left:1px solid var(--hair)}
+.hlang button:first-child{border-left:none}
+.hlang button.on{color:var(--paper);background:var(--ink)}
+.hlang button:not(.on):hover{color:var(--ink)}
+
+/* ===== SHEET INDICATOR ===== */
+.sheetind{position:fixed;left:var(--frame);bottom:var(--frame);z-index:600;background:var(--paper);border:1.5px solid var(--line);padding:.4rem .8rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.sheetind b{color:var(--red);font-weight:600}
+
+/* ===== LAYOUT ===== */
+main{position:relative;z-index:2;padding:calc(var(--frame) + 3rem) calc(var(--frame) + 3.5vw) calc(var(--frame) + 2rem)}
+section{max-width:1120px;margin:0 auto;padding:6.5rem 0;scroll-margin-top:6rem}
+.rule{max-width:1120px;margin:0 auto;height:1.5px;background:var(--line);position:relative}
+.rule::before,.rule::after{content:'';position:absolute;top:-4px;width:1px;height:9px;background:var(--line)}
+.rule::before{left:0}.rule::after{right:0}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.on{opacity:1;transform:none}
+
+/* ===== SECTION HEAD ===== */
+.shead{display:flex;align-items:flex-start;gap:1.4rem;margin-bottom:3rem}
+.sno{font-family:var(--mono);font-size:1rem;font-weight:600;border:1.5px solid var(--line);width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;flex:none;background:var(--paper)}
+.shead h2{font-family:var(--cond);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:.02em;text-transform:uppercase;line-height:1.05}
+.ssub{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-top:.45rem;font-weight:500}
+
+/* ===== HERO ===== */
+.hero{min-height:calc(100vh - 2*var(--frame));display:flex;flex-direction:column;justify-content:center;padding-top:7rem;padding-bottom:9rem;position:relative}
+
+/* dimension line */
+.dim{display:flex;align-items:center;max-width:760px;margin-bottom:2.2rem}
+.dseg{flex:1;height:1px;background:var(--ink);position:relative;transform-origin:center;animation:dgrow .8s var(--ease) .25s backwards}
+.dseg::before{content:'';position:absolute;top:-6px;width:1px;height:13px;background:var(--ink)}
+.dseg.l::before{left:0}.dseg.r::before{right:0}
+.dseg.l::after,.dseg.r::after{content:'';position:absolute;top:-3.5px;border-top:4px solid transparent;border-bottom:4px solid transparent}
+.dseg.l::after{left:0;border-right:7px solid var(--ink)}
+.dseg.r::after{right:0;border-left:7px solid var(--ink)}
+.dlab{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);padding:0 1rem;white-space:nowrap;animation:dfade .6s var(--ease) .7s backwards}
+@keyframes dgrow{from{transform:scaleX(0)}}
+@keyframes dfade{from{opacity:0}}
+
+.hname{font-family:var(--cond);font-weight:700;font-size:clamp(3.2rem,11vw,8.2rem);line-height:.92;letter-spacing:.005em;text-transform:uppercase;animation:dfade .7s var(--ease) .1s backwards}
+.hname .ol{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+
+.hspec{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:1.6rem 0 1.8rem}
+.hspec span{animation:dfade .5s var(--ease) backwards}
+.hspec span:nth-child(1){animation-delay:.5s}
+.hspec span:nth-child(2){animation-delay:.64s}
+.hspec span:nth-child(3){animation-delay:.78s}
+.hspec span{display:flex;align-items:center;gap:.55rem}
+.hspec span::before{content:'';width:5px;height:5px;background:var(--red);flex:none}
+
+.hdesc{max-width:560px;font-size:.95rem;color:var(--ink2);line-height:1.8;margin-bottom:2.4rem;animation:dfade .6s var(--ease) .65s backwards}
+
+.hbtns{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:2.6rem;animation:dfade .6s var(--ease) .8s backwards}
+.btn{font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.95rem 1.8rem;border:1.5px solid var(--line);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(90deg,var(--ink) 0 50%,var(--paper) 50% 100%);background-size:205% 100%;background-position:100% 0;transition:background-position .4s var(--ease),color .25s,border-color .25s}
+.btn:hover{background-position:0 0;color:var(--paper)}
+.btn.pri{border-color:var(--red);color:var(--red);background:linear-gradient(90deg,var(--red) 0 50%,var(--paper) 50% 100%);background-size:205% 100%;background-position:100% 0}
+.btn.pri:hover{background-position:0 0;color:var(--paper)}
+
+.hsoc{display:flex;gap:.7rem;animation:dfade .6s var(--ease) .95s backwards}
+.si{width:38px;height:38px;border:1.5px solid var(--hair);display:flex;align-items:center;justify-content:center;color:var(--ink2);transition:all .25s var(--ease)}
+.si svg{width:15px;height:15px;fill:currentColor}
+.si:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px)}
+
+/* stamp */
+.stamp{position:absolute;right:2%;top:22%;transform:rotate(-4deg);border:2.5px solid var(--red);color:var(--red);font-family:var(--mono);font-weight:600;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;padding:.9rem 1.3rem;text-align:center;line-height:1.7;box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 3.5px var(--red);background:var(--redsoft);animation:stampin .55s cubic-bezier(.34,1.4,.5,1) 1.15s backwards;user-select:none}
+@keyframes stampin{0%{opacity:0;transform:rotate(-4deg) scale(1.9)}70%{transform:rotate(-4deg) scale(.96)}100%{opacity:1;transform:rotate(-4deg) scale(1)}}
+
+/* title block */
+.tblock{position:absolute;right:0;bottom:0;width:min(460px,100%);border:1.5px solid var(--line);background:var(--paper);font-family:var(--mono)}
+.tblock .tbrow{animation:dfade .45s var(--ease) backwards}
+.tblock .tbrow:nth-child(1){animation-delay:.95s}
+.tblock .tbrow:nth-child(2){animation-delay:1.1s}
+.tblock .tbrow:nth-child(3){animation-delay:1.25s}
+.tbrow{display:grid;border-top:1px solid var(--hair)}
+.tbrow:first-child{border-top:none}
+.tb2{grid-template-columns:1fr 1fr}
+.tb3{grid-template-columns:1fr 1fr 1fr}
+.tbc{padding:.5rem .75rem;border-left:1px solid var(--hair);min-width:0}
+.tbc:first-child{border-left:none}
+.tbl{display:block;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:.15rem}
+.tbv{font-size:.66rem;font-weight:500;letter-spacing:.04em;color:var(--ink);text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbv.red{color:var(--red);font-weight:600}
+.angle svg{width:44px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.2}
+
+/* ===== NOTES (ABOUT) ===== */
+.notesgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:3.5rem;align-items:start}
+.uos{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin-bottom:1.6rem;padding-bottom:.8rem;border-bottom:1px solid var(--hair)}
+.notes{list-style:none;counter-reset:nt}
+.notes li{counter-increment:nt;position:relative;padding-left:2.6rem;margin-bottom:1.5rem;font-size:.93rem;color:var(--ink2);line-height:1.85}
+.notes li::before{content:counter(nt) ".";position:absolute;left:0;top:.1rem;font-family:var(--mono);font-weight:600;font-size:.8rem;color:var(--red)}
+.notes strong{color:var(--ink);font-weight:600}
+
+.spect{border:1.5px solid var(--line);background:var(--paper)}
+.spect h3{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.7rem .9rem;border-bottom:1.5px solid var(--line);background:var(--redsoft);color:var(--red);font-weight:600}
+.sprow{display:grid;grid-template-columns:1fr 1.1fr;border-top:1px solid var(--hair);font-family:var(--mono)}
+.sprow:first-of-type{border-top:none}
+.sprow dt{padding:.7rem .9rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);border-right:1px solid var(--hair)}
+.sprow dd{padding:.7rem .9rem;font-size:.66rem;font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+
+/* ===== TABLES (BOM / REV) ===== */
+.twrap{border:1.5px solid var(--line);background:var(--paper);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:var(--mono)}
+thead th{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:600;text-align:left;padding:.75rem .95rem;border-bottom:1.5px solid var(--line);background:var(--redsoft);white-space:nowrap}
+tbody td{padding:.9rem .95rem;border-bottom:1px solid var(--hair);vertical-align:top;font-size:.7rem}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(28,30,33,.025)}
+td.c1{color:var(--ink3);white-space:nowrap;font-size:.62rem}
+td.pn{font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+td.ds{font-family:var(--sans);color:var(--ink2);font-size:.85rem;line-height:1.7;min-width:220px}
+td.st{white-space:nowrap;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+td.st.red{color:var(--red);font-weight:600}
+tr.pend td{background:var(--redsoft)}
+
+/* ===== DETAILS (PROJECTS) ===== */
+.detgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.det{position:relative;border:1.5px solid var(--line);background:var(--paper);display:flex;flex-direction:column;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.det:not(.next)::before,.det:not(.next)::after{content:'';position:absolute;width:14px;height:14px;border:2px solid var(--red);opacity:0;transition:opacity .25s,transform .3s var(--ease);pointer-events:none}
+.det:not(.next)::before{top:-2px;left:-2px;border-right:none;border-bottom:none;transform:translate(5px,5px)}
+.det:not(.next)::after{bottom:-2px;right:-2px;border-left:none;border-top:none;transform:translate(-5px,-5px)}
+.det:not(.next):hover::before,.det:not(.next):hover::after{opacity:1;transform:translate(0,0)}
+.det:hover{transform:translateY(-3px);box-shadow:5px 5px 0 rgba(28,30,33,.12)}
+.deth{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.75rem 1.2rem;border-bottom:1.5px solid var(--line);font-family:var(--mono)}
+.detid{font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.detsc{font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.detb{padding:1.4rem 1.2rem;display:flex;flex-direction:column;gap:1rem;flex:1}
+.detn{font-family:var(--cond);font-weight:700;font-size:1.45rem;text-transform:uppercase;letter-spacing:.02em;line-height:1.1}
+.detd{font-size:.87rem;color:var(--ink2);line-height:1.75}
+.detf{margin-top:auto;padding-top:1rem;border-top:1px solid var(--hair);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.spec{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.spec b{color:var(--ink2);font-weight:500}
+.detl{display:inline-block;font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:2px;transition:color .25s,border-color .25s,transform .25s var(--ease);white-space:nowrap}
+.detl:hover{color:var(--red);border-color:var(--red);transform:translate(2px,-2px)}
+.det.next{grid-column:1/-1;border:none;padding:1.5px;background-image:repeating-linear-gradient(90deg,var(--ink) 0 7px,transparent 7px 14px),repeating-linear-gradient(90deg,var(--ink) 0 7px,transparent 7px 14px),repeating-linear-gradient(0deg,var(--ink) 0 7px,transparent 7px 14px),repeating-linear-gradient(0deg,var(--ink) 0 7px,transparent 7px 14px);background-size:100% 1.5px,100% 1.5px,1.5px 100%,1.5px 100%;background-position:0 0,0 100%,0 0,100% 0;background-repeat:no-repeat;animation:march 1.1s linear infinite}
+.det.next:hover{transform:none;box-shadow:none}
+.det.next .detb{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;width:100%}
+.det.next .detd{max-width:600px}
+.wip{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:inline-flex;align-items:center;gap:.55rem;white-space:nowrap}
+.wip::before{content:'';width:6px;height:6px;background:var(--red);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ===== CONTACT ===== */
+.ctc{border:1.5px solid var(--line);background:var(--paper);padding:3.5rem 2.5rem;text-align:center;position:relative}
+.ctc::before{content:'';position:absolute;inset:6px;border:.5px solid var(--hair);pointer-events:none}
+.ctc h2{font-family:var(--cond);font-weight:700;font-size:clamp(1.9rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.02em;margin-bottom:.7rem}
+.cts{color:var(--ink2);font-size:.9rem;max-width:480px;margin:0 auto 2rem}
+.ctmail{font-family:var(--mono);font-size:.78rem;font-weight:600;letter-spacing:.1em;padding:1.05rem 2.2rem;border:2px solid var(--red);color:var(--red);display:inline-flex;align-items:center;gap:.7rem;background:linear-gradient(90deg,var(--red) 0 50%,var(--paper) 50% 100%);background-size:205% 100%;background-position:100% 0;transition:background-position .4s var(--ease),color .25s}
+.ctmail:hover{background-position:0 0;color:var(--paper)}
+.ctalt{margin-top:1.6rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.ctalt a{color:var(--ink2);border-bottom:1px solid var(--hair);padding-bottom:1px;transition:all .25s}
+.ctalt a:hover{color:var(--red);border-color:var(--red)}
+
+/* ===== FOOTER ===== */
+footer{max-width:1120px;margin:0 auto;padding:2.2rem 0 1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.fr{display:flex;gap:1.6rem}
+.fr a{color:var(--ink2);transition:color .25s}
+.fr a:hover{color:var(--red)}
+
+/* ===== MOTION LAYER ===== */
+.prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--red);z-index:700}
+.xh{position:fixed;inset:0;pointer-events:none;z-index:450;opacity:0;transition:opacity .3s}
+.xh.on{opacity:1}
+.xhh,.xhv{position:absolute;background:var(--red);opacity:.16}
+.xhh{left:0;right:0;height:1px;top:0}
+.xhv{top:0;bottom:0;width:1px;left:0}
+.coord{position:fixed;right:var(--frame);bottom:var(--frame);z-index:600;background:var(--paper);border:1.5px solid var(--line);padding:.4rem .8rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);opacity:0;transition:opacity .3s}
+.coord.on{opacity:1}
+@media(hover:none),(pointer:coarse){.xh,.coord{display:none}}
+.rule{transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease)}
+.rule.on{transform:scaleX(1)}
+.shead h2{position:relative;display:inline-block;clip-path:inset(-10% 100% -10% 0)}
+.shead.on h2{clip-path:inset(-10% 0% -10% 0);transition:clip-path .9s var(--ease) .1s}
+.shead h2::after{content:'';position:absolute;top:-2%;bottom:-2%;left:0;width:2px;background:var(--red);opacity:0;pointer-events:none}
+.shead.on h2::after{animation:pen .9s var(--ease) .1s}
+.shead .sno{transform:scale(.7);opacity:0;transition:transform .45s cubic-bezier(.34,1.5,.5,1) .05s,opacity .3s .05s}
+.shead.on .sno{transform:scale(1);opacity:1}
+tbody tr{opacity:0;transform:translateX(-10px)}
+.twrap.on tbody tr{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.twrap.on tbody tr:nth-child(1){transition-delay:.05s}
+.twrap.on tbody tr:nth-child(2){transition-delay:.15s}
+.twrap.on tbody tr:nth-child(3){transition-delay:.25s}
+.twrap.on tbody tr:nth-child(4){transition-delay:.35s}
+.twrap.on tbody tr:nth-child(5){transition-delay:.45s}
+.twrap.on tbody tr:nth-child(6){transition-delay:.55s}
+.sheetind b{display:inline-block}
+.sheetind b.tick{animation:tick .3s var(--ease)}
+@keyframes pen{0%{left:0;opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes march{to{background-position:14px 0,-14px 100%,0 -14px,100% 14px}}
+@keyframes tick{0%{opacity:0;transform:translateY(5px)}100%{opacity:1;transform:none}}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+.stamp{position:static;transform:rotate(-3deg);align-self:flex-start;margin-bottom:2.2rem;order:-1}
+.hero{padding-top:6rem;padding-bottom:2rem}
+.tblock{position:static;width:100%;margin-top:3.5rem}
+.notesgrid{grid-template-columns:1fr;gap:2.5rem}
+.detgrid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+:root{--frame:9px}
+main{padding:calc(var(--frame) + 3.2rem) calc(var(--frame) + 1.1rem) calc(var(--frame) + 2rem)}
+section{padding:4.5rem 0}
+.hdwg{display:none}
+.hnav a{padding:.65rem .7rem;font-size:.56rem}
+.hlang button{padding:0 .6rem}
+.zt{display:none}
+.sheetind{display:none}
+.shead{gap:1rem}
+.sno{width:2.4rem;height:2.4rem;font-size:.85rem}
+.ctc{padding:2.5rem 1.3rem}
+tbody td{padding:.75rem .7rem}
+thead th{padding:.6rem .7rem}
+.dlab{padding:0 .6rem;letter-spacing:.12em}
+}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*,*::before,*::after{animation:none!important;transition:none!important}
+.rv,.rule,tbody tr,.shead .sno{opacity:1!important;transform:none!important}
+.shead h2{clip-path:none!important}
+.xh,.coord{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div class="xh" id="xh" aria-hidden="true"><i class="xhh"></i><i class="xhv"></i></div>
+<div class="coord" id="coord" aria-hidden="true">X 0000 · Y 0000</div>
+
+<div class="frame" id="frame" aria-hidden="true"></div>
+
+<header>
+<div class="hdwg"><b>DWG NO. MJ-001</b><span>REV 3.0</span></div>
+<nav class="hnav" id="nav">
+<a href="#" class="act" data-n="home" data-i18n="nav.home">Home</a>
+<a href="#about" data-n="about" data-i18n="nav.about">About</a>
+<a href="#skills" data-n="skills" data-i18n="nav.skills">Skills</a>
+<a href="#projects" data-n="projects" data-i18n="nav.projects">Projects</a>
+<a href="#education" data-n="education" data-i18n="nav.education">Education</a>
+<a href="#contact" data-n="contact" data-i18n="nav.contact">Contact</a>
+</nav>
+<div class="hlang"><button class="on" data-l="en">EN</button><button data-l="fr">FR</button></div>
+</header>
+
+<div class="sheetind" id="sheetind"><span data-i18n="ui.sheet">Sheet</span> <b id="shno">1</b>/6 · <span id="shname" data-i18n="sh.home">Title</span></div>
+
+<main>
+
+<!-- ============ HERO / TITLE SHEET ============ -->
+<section class="hero" id="home">
+<div class="stamp" data-i18n="hero.stamp">Open to<br>Opportunities</div>
+
+<div class="dim">
+<i class="dseg l"></i>
+<span class="dlab" data-i18n="hero.dim">Software Developer</span>
+<i class="dseg r"></i>
+</div>
+
+<h1 class="hname">Milos<br><span class="ol">Jarcov</span></h1>
+
+<div class="hspec">
+<span>Concordia CS · <span data-i18n="hero.class">Class of 2027</span></span>
+<span>Montréal · 45.50°N / 73.57°W</span>
+<span>EN · FR · SR · RO</span>
+</div>
+
+<p class="hdesc" data-i18n="hero.desc">Computer science student at Concordia University in Montréal, focused on strong fundamentals: data structures, systems programming and clean object-oriented design. Currently seeking a software engineering internship.</p>
+
+<div class="hbtns">
+<a href="#projects" class="btn pri"><span data-i18n="hero.cta1">View Projects</span> →</a>
+<a href="#contact" class="btn"><span data-i18n="hero.cta2">Get in Touch</span></a>
+</div>
+
+<div class="hsoc">
+<a href="https://github.com/milosjarcov" target="_blank" rel="noopener noreferrer" class="si" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+<a href="https://www.linkedin.com/in/milosjarcov" target="_blank" rel="noopener noreferrer" class="si" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+<a href="mailto:milosjarcov.biz@gmail.com" class="si" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+</div>
+
+<div class="tblock" aria-label="Title block">
+<div class="tbrow tb2">
+<div class="tbc"><span class="tbl" data-i18n="tb.title">Title</span><span class="tbv" data-i18n="tb.titlev">Software Engineering Portfolio</span></div>
+<div class="tbc"><span class="tbl" data-i18n="tb.status">Status</span><span class="tbv red" data-i18n="tb.statusv">Open to opportunities</span></div>
+</div>
+<div class="tbrow tb3">
+<div class="tbc"><span class="tbl" data-i18n="tb.drawn">Drawn by</span><span class="tbv">M. Jarcov</span></div>
+<div class="tbc"><span class="tbl" data-i18n="tb.date">Date</span><span class="tbv">2026-07</span></div>
+<div class="tbc"><span class="tbl" data-i18n="tb.material">Material</span><span class="tbv">Java · Py · C++</span></div>
+</div>
+<div class="tbrow tb3">
+<div class="tbc"><span class="tbl" data-i18n="tb.scale">Scale</span><span class="tbv">1:1</span></div>
+<div class="tbc"><span class="tbl" data-i18n="tb.sheet">Sheet</span><span class="tbv">1 / 6</span></div>
+<div class="tbc angle"><span class="tbl" data-i18n="tb.proj">Third angle</span><svg viewBox="0 0 44 22"><circle cx="10" cy="11" r="7"/><circle cx="10" cy="11" r="3.2"/><path d="M26 4.5 L40 8 L40 14 L26 17.5 Z"/><line x1="0" y1="11" x2="20" y2="11" stroke-dasharray="3 2"/><line x1="24" y1="11" x2="44" y2="11" stroke-dasharray="3 2"/></svg></div>
+</div>
+</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============ 02 GENERAL NOTES / ABOUT ============ -->
+<section id="about">
+<div class="shead rv"><span class="sno">02</span><div><h2 data-i18n="about.h">General Notes</h2><span class="ssub" data-i18n="about.sub">About</span></div></div>
+<div class="notesgrid">
+<div class="rv">
+<p class="uos" data-i18n="about.uos">Unless otherwise specified:</p>
+<ol class="notes">
+<li data-i18n="about.p1">I'm <strong>Milos Jarcov</strong>, a computer science student at Concordia University in Montréal. I got into technology by taking things apart as a kid to understand how they worked, and that curiosity never left. Today it shows up in how I approach software: data structures and algorithms, object-oriented design in Java, and low-level programming in C and C++.</li>
+<li data-i18n="about.p2">I'm currently looking for a <strong>software engineering internship</strong>. I bring solid fundamentals, a genuine curiosity for how systems work under the hood, and the discipline to write software that is correct and maintainable. I'm open to any team where I can contribute and learn from experienced engineers.</li>
+<li data-i18n="about.p3">Outside of school, you'll find me at the gym, on the basketball court, or around cars. I speak four languages: English, French, Serbian and Romanian.</li>
+</ol>
+</div>
+<div class="spect rv">
+<h3 data-i18n="about.spec">Specifications</h3>
+<dl>
+<div class="sprow"><dt data-i18n="about.s1">Location</dt><dd>Montréal, QC</dd></div>
+<div class="sprow"><dt data-i18n="about.s2">Graduation</dt><dd data-i18n="about.s2v">2027 (Expected)</dd></div>
+<div class="sprow"><dt data-i18n="about.s3">Spoken languages</dt><dd>4 · EN FR SR RO</dd></div>
+<div class="sprow"><dt data-i18n="about.s4">Programming languages</dt><dd>5+</dd></div>
+<div class="sprow"><dt data-i18n="about.s5">Objective</dt><dd data-i18n="about.s5v">Software engineering internship</dd></div>
+</dl>
+</div>
+</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============ 03 BILL OF MATERIALS / SKILLS ============ -->
+<section id="skills">
+<div class="shead rv"><span class="sno">03</span><div><h2 data-i18n="skills.h">Bill of Materials</h2><span class="ssub" data-i18n="skills.sub">Skills & Tooling</span></div></div>
+<div class="twrap rv">
+<table>
+<thead><tr><th data-i18n="bom.h1">Item</th><th data-i18n="bom.h2">Part No.</th><th data-i18n="bom.h3">Application</th></tr></thead>
+<tbody>
+<tr><td class="c1">01</td><td class="pn">Java</td><td class="ds" data-i18n="bom.a1">Object-oriented design and data structures</td></tr>
+<tr><td class="c1">02</td><td class="pn">Python</td><td class="ds" data-i18n="bom.a2">Scripting & problem solving</td></tr>
+<tr><td class="c1">03</td><td class="pn">C++</td><td class="ds" data-i18n="bom.a3">Systems programming</td></tr>
+<tr><td class="c1">04</td><td class="pn">C</td><td class="ds" data-i18n="bom.a4">Memory & low-level fundamentals</td></tr>
+<tr><td class="c1">05</td><td class="pn">Clojure</td><td class="ds" data-i18n="bom.a5">Functional programming</td></tr>
+<tr><td class="c1">06</td><td class="pn">HTML / CSS / JS</td><td class="ds" data-i18n="bom.a6">This site, built from scratch</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============ 04 DETAIL VIEWS / PROJECTS ============ -->
+<section id="projects">
+<div class="shead rv"><span class="sno">04</span><div><h2 data-i18n="proj.h">Detail Views</h2><span class="ssub" data-i18n="proj.sub">Projects</span></div></div>
+<div class="detgrid">
+
+<article class="det rv">
+<div class="deth"><span class="detid" data-i18n="proj.d1">Detail A</span><span class="detsc">Scale 2:1</span></div>
+<div class="detb">
+<h3 class="detn" data-i18n="proj.p1t">This Website</h3>
+<p class="detd" data-i18n="proj.p1d">This portfolio, designed and built from scratch in vanilla HTML, CSS and JavaScript with no frameworks or libraries. It features a CSS drafting grid, animated dimension lines, an engineering style title block and a complete English/French internationalization layer.</p>
+<div class="detf"><span class="spec">SPEC: <b>JavaScript · CSS · i18n · SVG</b></span><a class="detl" href="https://github.com/milosjarcov/milosjarcov.github.io" target="_blank" rel="noopener noreferrer"><span data-i18n="proj.code">Code</span> ↗</a></div>
+</div>
+</article>
+
+<article class="det rv">
+<div class="deth"><span class="detid" data-i18n="proj.d2">Detail B</span><span class="detsc">Scale 2:1</span></div>
+<div class="detb">
+<h3 class="detn" data-i18n="proj.p2t">Advanced Priority Queue</h3>
+<p class="detd" data-i18n="proj.p2d">A Java implementation of an adaptable priority queue ADT, built for my data structures and algorithms course. The heap-based structure can switch between min and max behaviour at runtime and supports the standard insert, top and remove-top operations.</p>
+<div class="detf"><span class="spec">SPEC: <b>Java · Data Structures · Heaps</b></span><a class="detl" href="https://github.com/milosjarcov" target="_blank" rel="noopener noreferrer"><span data-i18n="proj.code">Code</span> ↗</a></div>
+</div>
+</article>
+
+<article class="det next rv">
+<div class="deth"><span class="detid" data-i18n="proj.d3">Detail C</span><span class="wip" data-i18n="proj.p3s">In Progress</span></div>
+<div class="detb">
+<div><h3 class="detn" style="margin-bottom:.5rem" data-i18n="proj.p3t">Next Build</h3>
+<p class="detd" data-i18n="proj.p3d">The next project is currently in planning. Check my GitHub to follow along.</p></div>
+</div>
+</article>
+
+</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============ 05 REVISION HISTORY / EDUCATION ============ -->
+<section id="education">
+<div class="shead rv"><span class="sno">05</span><div><h2 data-i18n="edu.h">Revision History</h2><span class="ssub" data-i18n="edu.sub">Education</span></div></div>
+<div class="twrap rv">
+<table>
+<thead><tr><th data-i18n="rev.h1">Rev</th><th data-i18n="rev.h2">Description</th><th data-i18n="rev.h3">Period</th><th data-i18n="rev.h4">Status</th></tr></thead>
+<tbody>
+<tr><td class="c1">A</td><td class="ds" data-i18n="rev.a">DEC in Social Sciences with Mathematics, John Abbott College, Montréal. Dean's List. Developed the analytical and quantitative foundation that supports my CS work today.</td><td class="st">2020 - 2023</td><td class="st" data-i18n="rev.as">Released</td></tr>
+<tr><td class="c1">B</td><td class="ds" data-i18n="rev.b">Bachelor of Computer Science, Concordia University, Montréal. Core coursework: data structures and algorithms, discrete mathematics, object-oriented programming in Java, systems programming in C/C++, and functional programming in Clojure.</td><td class="st">2023 - 2027</td><td class="st" data-i18n="rev.bs">In Work</td></tr>
+<tr class="pend"><td class="c1">C</td><td class="ds" data-i18n="rev.c">Software engineering internship.</td><td class="st" data-i18n="rev.cp">TBD</td><td class="st red" data-i18n="rev.cs">Pending</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============ 06 CONTACT ============ -->
+<section id="contact">
+<div class="shead rv"><span class="sno">06</span><div><h2 data-i18n="contact.h">Inquiries</h2><span class="ssub" data-i18n="contact.sub2">Contact</span></div></div>
+<div class="ctc rv">
+<h2 data-i18n="contact.heading">Let's Connect</h2>
+<p class="cts" data-i18n="contact.sub">Whether you're recruiting, have a question about my work, or just want to connect, my inbox is open.</p>
+<a href="mailto:milosjarcov.biz@gmail.com" class="ctmail">✉ milosjarcov.biz@gmail.com</a>
+<p class="ctalt"><span data-i18n="contact.alt">Or find me on</span> <a href="https://www.linkedin.com/in/milosjarcov" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a> · <a href="https://github.com/milosjarcov" target="_blank" rel="noopener noreferrer">GitHub ↗</a></p>
+</div>
+</section>
+
+<footer><span>© 2026 Milos Jarcov · DWG MJ-001 · <span data-i18n="footer.tag">Drafted by hand. No frameworks.</span></span><div class="fr"><a href="https://www.linkedin.com/in/milosjarcov" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/milosjarcov" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:milosjarcov.biz@gmail.com">Email</a></div></footer>
+
+</main>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ===== FRAME ZONE TICKS =====
+(function(){
+const f=document.getElementById('frame');
+const letters=['A','B','C','D'],nums=[1,2,3,4,5,6,7,8];
+nums.forEach((n,i)=>{
+const t=document.createElement('span');t.className='zt';t.textContent=n;
+t.style.cssText=`top:-1px;left:${(i+.5)*100/nums.length}%;transform:translate(-50%,-100%);padding-bottom:2px`;f.appendChild(t);
+const b=t.cloneNode(true);b.style.cssText=`bottom:-1px;left:${(i+.5)*100/nums.length}%;transform:translate(-50%,100%);padding-top:2px`;f.appendChild(b);
+});
+letters.forEach((l,i)=>{
+const t=document.createElement('span');t.className='zt';t.textContent=l;
+t.style.cssText=`left:-1px;top:${(i+.5)*100/letters.length}%;transform:translate(-100%,-50%);padding-right:3px`;f.appendChild(t);
+const r=t.cloneNode(true);r.style.cssText=`right:-1px;top:${(i+.5)*100/letters.length}%;transform:translate(100%,-50%);padding-left:3px`;f.appendChild(r);
+});
+})();
+
+// ===== PROGRESS PEN =====
+const pB=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;pB.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
+
+// ===== CAD CROSSHAIR + COORDINATE READOUT =====
+const FINE=matchMedia('(hover: hover) and (pointer: fine)').matches;
+if(FINE&&!RM){
+const xh=document.getElementById('xh'),xhh=xh.querySelector('.xhh'),xhv=xh.querySelector('.xhv'),co=document.getElementById('coord');
+let mx=0,my=0,raf=null;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;
+if(!raf)raf=requestAnimationFrame(()=>{xhh.style.transform=`translateY(${my}px)`;xhv.style.transform=`translateX(${mx}px)`;co.textContent=`X ${String(mx).padStart(4,'0')} · Y ${String(my).padStart(4,'0')}`;raf=null});
+xh.classList.add('on');co.classList.add('on')},{passive:true});
+document.addEventListener('mouseleave',()=>{xh.classList.remove('on');co.classList.remove('on')});
+}
+
+// ===== SCROLL REVEALS =====
+const rO=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');rO.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv,.rule').forEach(el=>rO.observe(el));
+
+// ===== NAV + SHEET INDICATOR =====
+const nls=document.querySelectorAll('.hnav a[data-n]'),secs=['home','about','skills','projects','education','contact'];
+const shEl=document.getElementById('shno'),shName=document.getElementById('shname');
+const shKeys={home:'sh.home',about:'sh.about',skills:'sh.skills',projects:'sh.projects',education:'sh.education',contact:'sh.contact'};
+function sAN(id){
+nls.forEach(a=>a.classList.toggle('act',a.dataset.n===id));
+const n=String(secs.indexOf(id)+1);
+if(shEl.textContent!==n){shEl.textContent=n;shEl.classList.remove('tick');void shEl.offsetWidth;shEl.classList.add('tick')}
+shName.dataset.i18n=shKeys[id];
+shName.textContent=i18n[cLang][shKeys[id]];
+}
+nls.forEach(a=>a.addEventListener('click',()=>sAN(a.dataset.n)));
+const sEls=secs.map(id=>document.getElementById(id)).filter(Boolean);
+window.addEventListener('scroll',()=>{let cur='home';sEls.forEach((s,i)=>{if(s.getBoundingClientRect().top<=innerHeight*.4)cur=secs[i]});sAN(cur)},{passive:true});
+
+// ===== i18n =====
+const i18n={en:{
+'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.projects':'Projects','nav.education':'Education','nav.contact':'Contact',
+'ui.sheet':'Sheet',
+'sh.home':'Title','sh.about':'General Notes','sh.skills':'Bill of Materials','sh.projects':'Detail Views','sh.education':'Revisions','sh.contact':'Inquiries',
+'hero.stamp':'Open to<br>Opportunities',
+'hero.dim':'Software Developer',
+'hero.class':'Class of 2027',
+'hero.desc':'Computer science student at Concordia University in Montréal, focused on strong fundamentals: data structures, systems programming and clean object-oriented design. Currently seeking a software engineering internship.',
+'hero.cta1':'View Projects','hero.cta2':'Get in Touch',
+'tb.title':'Title','tb.titlev':'Software Engineering Portfolio','tb.status':'Status','tb.statusv':'Open to opportunities','tb.drawn':'Drawn by','tb.date':'Date','tb.material':'Material','tb.scale':'Scale','tb.sheet':'Sheet','tb.proj':'Third angle',
+'about.h':'General Notes','about.sub':'About','about.uos':'Unless otherwise specified:',
+'about.p1':"I'm <strong>Milos Jarcov</strong>, a computer science student at Concordia University in Montréal. I got into technology by taking things apart as a kid to understand how they worked, and that curiosity never left. Today it shows up in how I approach software: data structures and algorithms, object-oriented design in Java, and low-level programming in C and C++.",
+'about.p2':"I'm currently looking for a <strong>software engineering internship</strong>. I bring solid fundamentals, a genuine curiosity for how systems work under the hood, and the discipline to write software that is correct and maintainable. I'm open to any team where I can contribute and learn from experienced engineers.",
+'about.p3':"Outside of school, you'll find me at the gym, on the basketball court, or around cars. I speak four languages: English, French, Serbian and Romanian.",
+'about.spec':'Specifications','about.s1':'Location','about.s2':'Graduation','about.s2v':'2027 (Expected)','about.s3':'Spoken languages','about.s4':'Programming languages','about.s5':'Objective','about.s5v':'Software engineering internship',
+'skills.h':'Bill of Materials','skills.sub':'Skills & Tooling',
+'bom.h1':'Item','bom.h2':'Part No.','bom.h3':'Application',
+'bom.a1':'Object-oriented design and data structures','bom.a2':'Scripting & problem solving','bom.a3':'Systems programming','bom.a4':'Memory & low-level fundamentals','bom.a5':'Functional programming','bom.a6':'This site, built from scratch',
+'proj.h':'Detail Views','proj.sub':'Projects','proj.code':'Code','proj.d1':'Detail A','proj.d2':'Detail B','proj.d3':'Detail C',
+'proj.p1t':'This Website','proj.p1d':"This portfolio, designed and built from scratch in vanilla HTML, CSS and JavaScript with no frameworks or libraries. It features a CSS drafting grid, animated dimension lines, an engineering style title block and a complete English/French internationalization layer.",
+'proj.p2t':'Advanced Priority Queue','proj.p2d':'A Java implementation of an adaptable priority queue ADT, built for my data structures and algorithms course. The heap-based structure can switch between min and max behaviour at runtime and supports the standard insert, top and remove-top operations.',
+'proj.p3t':'Next Build','proj.p3d':'The next project is currently in planning. Check my GitHub to follow along.','proj.p3s':'In Progress',
+'edu.h':'Revision History','edu.sub':'Education',
+'rev.h1':'Rev','rev.h2':'Description','rev.h3':'Period','rev.h4':'Status',
+'rev.a':"DEC in Social Sciences with Mathematics, John Abbott College, Montréal. Dean's List. Developed the analytical and quantitative foundation that supports my CS work today.",'rev.as':'Released',
+'rev.b':'Bachelor of Computer Science, Concordia University, Montréal. Core coursework: data structures and algorithms, discrete mathematics, object-oriented programming in Java, systems programming in C/C++, and functional programming in Clojure.','rev.bs':'In Work',
+'rev.c':'Software engineering internship.','rev.cp':'TBD','rev.cs':'Pending',
+'contact.h':'Inquiries','contact.sub2':'Contact','contact.heading':"Let's Connect",'contact.sub':"Whether you're recruiting, have a question about my work, or just want to connect, my inbox is open.",'contact.alt':'Or find me on',
+'footer.tag':'Drafted by hand. No frameworks.'
+},fr:{
+'nav.home':'Accueil','nav.about':'À propos','nav.skills':'Compétences','nav.projects':'Projets','nav.education':'Éducation','nav.contact':'Contact',
+'ui.sheet':'Feuille',
+'sh.home':'Titre','sh.about':'Notes générales','sh.skills':'Nomenclature','sh.projects':'Vues de détail','sh.education':'Révisions','sh.contact':'Demandes',
+'hero.stamp':'Ouvert aux<br>opportunités',
+'hero.dim':'Développeur logiciel',
+'hero.class':'Promo 2027',
+'hero.desc':"Étudiant en informatique à l'Université Concordia à Montréal, axé sur des bases solides : structures de données, programmation système et conception orientée objet rigoureuse. À la recherche d'un stage en génie logiciel.",
+'hero.cta1':'Voir mes projets','hero.cta2':'Me contacter',
+'tb.title':'Titre','tb.titlev':'Portfolio de génie logiciel','tb.status':'Statut','tb.statusv':'Disponible','tb.drawn':'Dessiné par','tb.date':'Date','tb.material':'Matériau','tb.scale':'Échelle','tb.sheet':'Feuille','tb.proj':'3e dièdre',
+'about.h':'Notes générales','about.sub':'À propos','about.uos':'Sauf indication contraire :',
+'about.p1':"Je suis <strong>Milos Jarcov</strong>, étudiant en informatique à l'Université Concordia à Montréal. Je suis tombé dans la technologie en démontant des objets pour comprendre leur fonctionnement, et cette curiosité ne m'a jamais quittée. Aujourd'hui, elle se reflète dans ma façon d'aborder le logiciel : structures de données et algorithmes, conception orientée objet en Java et programmation bas niveau en C et C++.",
+'about.p2':"Je suis présentement à la recherche de un <strong>stage en génie logiciel</strong>. J'apporte des bases solides, une réelle curiosité pour le fonctionnement interne des systèmes et la rigueur nécessaire pour écrire du logiciel correct et maintenable. Je suis ouvert à toute équipe où je pourrai contribuer et apprendre d'ingénieurs d'expérience.",
+'about.p3':"En dehors des études, on me trouve au gym, sur un terrain de basket ou autour des autos. Je parle quatre langues : l'anglais, le français, le serbe et le roumain.",
+'about.spec':'Spécifications','about.s1':'Emplacement','about.s2':'Diplôme','about.s2v':'2027 (prévu)','about.s3':'Langues parlées','about.s4':'Langages de programmation','about.s5':'Objectif','about.s5v':'Stage en génie logiciel',
+'skills.h':'Nomenclature','skills.sub':'Compétences & outils',
+'bom.h1':'Art.','bom.h2':'Réf.','bom.h3':'Application',
+'bom.a1':'Conception orientée objet et structures de données','bom.a2':'Scripting & résolution de problèmes','bom.a3':'Programmation système','bom.a4':'Mémoire & bas niveau','bom.a5':'Programmation fonctionnelle','bom.a6':'Ce site, codé à partir de zéro',
+'proj.h':'Vues de détail','proj.sub':'Projets','proj.code':'Code','proj.d1':'Détail A','proj.d2':'Détail B','proj.d3':'Détail C',
+'proj.p1t':'Ce site web','proj.p1d':"Ce portfolio, conçu et codé à partir de zéro en HTML, CSS et JavaScript pur, sans framework ni librairie. Il comprend une grille de dessin technique en CSS, des lignes de cote animées, un cartouche de style ingénierie et une couche d'internationalisation anglais/français complète.",
+'proj.p2t':'File de priorité avancée','proj.p2d':"Implémentation Java d'une file de priorité adaptable (ADT), réalisée dans le cadre de mon cours de structures de données et d'algorithmes. La structure basée sur un tas peut alterner entre les comportements min et max à l'exécution et prend en charge les opérations standard insert, top et remove-top.",
+'proj.p3t':'Prochain projet','proj.p3d':'Le prochain projet est en cours de planification. Suivez mon GitHub pour voir la suite.','proj.p3s':'En cours',
+'edu.h':'Historique des révisions','edu.sub':'Éducation',
+'rev.h1':'Rév','rev.h2':'Description','rev.h3':'Période','rev.h4':'Statut',
+'rev.a':"DEC en Sciences sociales avec mathématiques, Collège John Abbott, Montréal. Tableau d'honneur du doyen. Une base analytique et quantitative qui soutient mon travail en informatique aujourd'hui.",'rev.as':'Complété',
+'rev.b':'Baccalauréat en informatique, Université Concordia, Montréal. Cours principaux : structures de données et algorithmes, mathématiques discrètes, programmation orientée objet en Java, programmation système en C/C++ et programmation fonctionnelle en Clojure.','rev.bs':'En cours',
+'rev.c':'Stage en génie logiciel.','rev.cp':'À déterminer','rev.cs':'En attente',
+'contact.h':'Demandes','contact.sub2':'Contact','contact.heading':'Connectons-nous','contact.sub':"Que vous recrutiez, que vous ayez une question sur mon travail ou que vous souhaitiez simplement échanger, ma boîte de réception est ouverte.",'contact.alt':'Ou retrouvez-moi sur',
+'footer.tag':'Dessiné à la main. Aucun framework.'
+}};
+let cLang='en';
+function aLang(lang){cLang=lang;const t=i18n[lang];document.documentElement.lang=lang;
+document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(t[k]!==undefined){if(t[k].includes('<'))el.innerHTML=t[k];else el.textContent=t[k]}});
+}
+document.querySelectorAll('.hlang button').forEach(b=>b.addEventListener('click',()=>{
+document.querySelectorAll('.hlang button').forEach(x=>x.classList.remove('on'));
+b.classList.add('on');aLang(b.dataset.l);
+}));
+</script>
+</body>
+</html>
