@@ -502,22 +502,23 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
             <ol class="src">
 <li><span class="td">@app.get(</span><span class="ts">"/api/flights"</span><span class="td">)</span></li>
 <li><span class="tk">def</span> <span class="tf">get_flights</span>():</li>
-<li>    now = time.time()</li>
-<li>    cache_age = now - _cache[<span class="ts">"fetched_at"</span>]</li>
+<li data-g="d">    <span class="tk">with</span> _cache_lock:</li>
+<li>        _stats[<span class="ts">"requests"</span>] += <span class="tn">1</span></li>
+<li>        now = time.time()</li>
+<li data-g="a">        <span class="tk">if</span> now - _cache[<span class="ts">"attempted_at"</span>] &lt; CACHE_TTL_SECONDS:</li>
+<li data-g="a">            <span class="tk">if</span> _cache[<span class="ts">"payload"</span>] <span class="tk">is None</span>:</li>
+<li data-g="a">                <span class="tk">raise</span> HTTPException(status_code=<span class="tn">502</span>, detail=<span class="ts">"OpenSky is unreachable"</span>)</li>
+<li data-g="a">            <span class="tk">return</span> _cache[<span class="ts">"payload"</span>]</li>
 <li> </li>
-<li data-g="a">    <span class="tk">if</span> _cache[<span class="ts">"payload"</span>] <span class="tk">is not None and</span> cache_age &lt; CACHE_TTL_SECONDS:</li>
-<li data-g="a">        <span class="tk">return</span> _cache[<span class="ts">"payload"</span>]</li>
+<li data-g="b">        _cache[<span class="ts">"attempted_at"</span>] = now</li>
+<li data-g="b">        <span class="tk">try</span>:</li>
+<li data-g="b">            _cache[<span class="ts">"payload"</span>] = fetch_from_opensky()</li>
+<li data-g="c">        <span class="tk">except</span> requests.RequestException <span class="tk">as</span> exc:</li>
+<li data-g="c">            log.warning(<span class="ts">"OpenSky fetch failed: %s"</span>, exc)</li>
 <li> </li>
-<li data-g="b">    <span class="tk">try</span>:</li>
-<li data-g="b">        _cache[<span class="ts">"payload"</span>] = fetch_from_opensky()</li>
-<li data-g="b">        _cache[<span class="ts">"fetched_at"</span>] = now</li>
-<li data-g="c">    <span class="tk">except</span> requests.RequestException <span class="tk">as</span> exc:</li>
-<li data-g="c">        log.warning(<span class="ts">"OpenSky fetch failed: %s"</span>, exc)</li>
-<li data-g="c">        <span class="tk">if</span> _cache[<span class="ts">"payload"</span>] <span class="tk">is None</span>:</li>
-<li data-g="c">            <span class="tk">raise</span> HTTPException(status_code=<span class="tn">502</span>, detail=<span class="ts">"OpenSky is unreachable"</span>)</li>
-<li data-g="c">        _cache[<span class="ts">"fetched_at"</span>] = now</li>
-<li> </li>
-<li>    <span class="tk">return</span> _cache[<span class="ts">"payload"</span>]</li>
+<li>        <span class="tk">if</span> _cache[<span class="ts">"payload"</span>] <span class="tk">is None</span>:</li>
+<li>            <span class="tk">raise</span> HTTPException(status_code=<span class="tn">502</span>, detail=<span class="ts">"OpenSky is unreachable"</span>)</li>
+<li>        <span class="tk">return</span> _cache[<span class="ts">"payload"</span>]</li>
             </ol>
           </div>
           <div class="layer simlayer" data-layer="sim" id="L-sim"><canvas id="simc" aria-label="Simulation of browsers polling the backend and the backend calling OpenSky" data-i18n-aria="simAria"></canvas></div>
@@ -552,9 +553,10 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
           <h4 data-i18n="sw3h">The whole trick is one function.</h4>
           <p data-i18n="sw3p">Every browser asks the FastAPI backend, never OpenSky directly. On each request the backend decides:</p>
           <ul class="beats" id="beats">
-            <li data-g="a"><b data-i18n="b1k">Fresh</b><span data-i18n="b1">Snapshot under 15 seconds old? Return it.</span></li>
+            <li data-g="a"><b data-i18n="b1k">Fresh</b><span data-i18n="b1">Asked OpenSky less than 15 seconds ago? Return the snapshot.</span></li>
             <li data-g="b"><b data-i18n="b2k">Stale</b><span data-i18n="b2">Older than that? Fetch a new one from OpenSky.</span></li>
-            <li data-g="c"><b data-i18n="b3k">Down</b><span data-i18n="b3">OpenSky unreachable? Keep serving the last one.</span></li>
+            <li data-g="c"><b data-i18n="b3k">Down</b><span data-i18n="b3">OpenSky unreachable? Keep serving the last one and wait 15 seconds before retrying.</span></li>
+            <li data-g="d"><b data-i18n="b4k">At once</b><span data-i18n="b4">Twenty requests in the same instant? The lock lets one call OpenSky, and the rest reuse its answer. A test checks exactly this.</span></li>
           </ul>
           <div class="slot" data-for="L-code"></div>
         </div>
@@ -726,9 +728,10 @@ const french = {
   sw2p:"Sous la carte, chaque avion est placé à son altitude, juste sous sa position sur la carte, même quand on la déplace ou qu'on zoome. On peut glisser le plancher ambré pour cacher le trafic bas, ou revenir sur les dix dernières minutes.",
   sw3h:"Tout tient dans une fonction.",
   sw3p:"Chaque navigateur interroge le backend FastAPI, jamais OpenSky directement. À chaque requête, le backend décide :",
-  b1k:"Récent", b1:"Instantané de moins de 15 secondes ? On le renvoie.",
+  b1k:"Récent", b1:"OpenSky interrogé il y a moins de 15 secondes ? On renvoie l'instantané.",
   b2k:"Périmé", b2:"Plus vieux que ça ? On en récupère un nouveau chez OpenSky.",
-  b3k:"Panne", b3:"OpenSky injoignable ? On continue de servir le dernier.",
+  b3k:"Panne", b3:"OpenSky injoignable ? On continue de servir le dernier et on attend 15 secondes avant de réessayer.",
+  b4k:"En même temps", b4:"Vingt requêtes au même instant ? Le verrou en laisse une seule appeler OpenSky, et les autres réutilisent sa réponse. Un test vérifie exactement ça.",
   sw4h:"Un appel à OpenSky toutes les 15 secondes, peu importe qui regarde.",
   sw4p:"L'accès anonyme à OpenSky permet environ 400 appels par jour. Comme tout le monde partage le même instantané, plus de spectateurs veut dire plus de requêtes au backend, pas plus d'appels à OpenSky. Essayez :",
   simViewers:"Spectateurs", simCache:"Cache", simOn:"activé", simOff:"désactivé",
@@ -1040,9 +1043,9 @@ const apiFeed = (function () {
   };
 })();
 
-/* ---------- get_flights(): step through the three branches ---------- */
+/* ---------- get_flights(): step through its four rules ---------- */
 const beats = (function () {
-  const lines = $$('#L-code .src li[data-g]'), items = $$('#beats li'), order = ['a', 'b', 'c'];
+  const lines = $$('#L-code .src li[data-g]'), items = $$('#beats li'), order = ['a', 'b', 'c', 'd'];
   let k = 0, timer = 0, held = false;
   const show = g => {
     lines.forEach(l => l.classList.toggle('hl', l.dataset.g === g));
@@ -1054,7 +1057,7 @@ const beats = (function () {
   });
   show('a');
   return {
-    start() { if (timer || RM) return; timer = setInterval(() => { if (held) return; k = (k + 1) % 3; show(order[k]); }, 2300); },
+    start() { if (timer || RM) return; timer = setInterval(() => { if (held) return; k = (k + 1) % order.length; show(order[k]); }, 2300); },
     stop() { clearInterval(timer); timer = 0; }
   };
 })();
