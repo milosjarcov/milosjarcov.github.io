@@ -490,11 +490,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
         <figure class="frame">
           <div class="layer on" data-layer="shot">
             <div class="zoomwrap">
-              <img src="assets/skywatch-yul.png" width="1280" height="720" loading="lazy" alt="SkyWatch YUL aircraft map over Montréal with a list of aircraft" data-i18n-alt="swAlt">
-              <i class="note ring" data-step="1" style="left:31.64%;top:59.03%;width:3.13%;height:5.56%"><span data-i18n="n6">Position from ADS-B</span></i>
-              <i class="note ring below" data-step="1" style="left:41.17%;top:66.67%;width:3.13%;height:5.56%"><span data-i18n="n7">Rotated to its heading</span></i>
-              <i class="note below" data-step="2" style="left:73.75%;top:57.36%;width:5.47%;height:6.11%"><span data-i18n="n8">Callsign and country</span></i>
-              <i class="note left" data-step="2" style="left:91.1%;top:58.06%;width:6.09%;height:4.44%"><span data-i18n="n9">Altitude and trend</span></i>
+              <img src="assets/skywatch-yul.webp" width="1280" height="720" loading="lazy" alt="SkyWatch YUL tracking aircraft around Montréal on a dark radar-style map, with a vertical profile below and a list of flights" data-i18n-alt="swAlt">
+              <i class="note right" data-step="1" style="left:40%;top:30%;width:4.24%;height:4.2%"><span data-i18n="n6">Callsign, altitude, speed</span></i>
+              <i class="note ring left" data-step="1" style="left:54.86%;top:40.74%;width:1.11%;height:1.98%"><span data-i18n="n7">Where it will be in a minute</span></i>
+              <i class="note ring left" data-step="2" style="left:30.9%;top:44.69%;width:2.5%;height:4.44%"><span data-i18n="n8">Two flights, one spot</span></i>
+              <i class="note right" data-step="2" style="left:30.97%;top:77.78%;width:2.5%;height:12.1%"><span data-i18n="n9">22,000 ft apart</span></i>
             </div>
           </div>
           <div class="layer code" data-layer="code" id="L-code" aria-label="The get_flights function from backend/main.py" data-i18n-aria="codeAria">
@@ -530,21 +530,21 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
         <div class="step-in">
           <p class="label" data-i18n="swKind">Real-time data</p>
           <h3 class="p-title" id="sw-t">SkyWatch YUL</h3>
-          <p class="p-sum" data-i18n="swSum">A live map of aircraft over Montréal, built on ADS-B positions from the OpenSky Network.</p>
-          <p class="stack">React · Vite · Leaflet · FastAPI · OpenSky REST API</p>
+          <p class="p-sum" data-i18n="swSum">A live flight tracker for the sky over Montréal, built on real ADS-B data from the OpenSky Network.</p>
+          <p class="stack">React · Vite · Leaflet · MapLibre · FastAPI · OpenSky REST API</p>
           <a class="u" href="https://github.com/milosjarcov/skywatch-yul" target="_blank" rel="noopener noreferrer"><span data-i18n="viewSource">View source</span><span class="ar" aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="step" data-layer="shot" data-zoom=".2,.47,.4,.45" data-cap="capG">
+      <div class="step" data-layer="shot" data-zoom=".208,.284,.361,.296" data-cap="capG">
         <div class="step-in">
-          <h4 data-i18n="sw1h">Every plane in the Montréal area.</h4>
-          <p data-i18n="sw1p">Aircraft broadcast their own position over ADS-B. The map plots each one, rotates the marker to its reported heading, and refreshes every 15 seconds.</p>
+          <h4 data-i18n="sw1h">Every plane, the way a controller sees it.</h4>
+          <p data-i18n="sw1p">Each plane carries a data block like on an air traffic control screen: callsign, altitude in hundreds of feet, and ground speed. New data arrives every 15 seconds, and in between every plane keeps moving along its reported track, so the map never freezes.</p>
         </div>
       </div>
-      <div class="step" data-layer="shot" data-zoom=".735,.29,.25,.62" data-cap="capH">
+      <div class="step" data-layer="shot" data-zoom="0,.37,.63,.63" data-cap="capH">
         <div class="step-in">
-          <h4 data-i18n="sw2h">Details when you want them.</h4>
-          <p data-i18n="sw2p">Filter by callsign or minimum altitude, and click a plane to see its callsign, altitude, speed and climb rate.</p>
+          <h4 data-i18n="sw2h">A side view, lined up with the map.</h4>
+          <p data-i18n="sw2p">Under the map, each plane sits at its altitude, directly below its spot on the map, even while you pan and zoom. Drag the amber floor to hide low traffic, or scrub back through the last ten minutes.</p>
         </div>
       </div>
       <div class="step" data-layer="code" data-cap="capI">
@@ -713,17 +713,17 @@ const french = {
   ph3p:"Le backend FastAPI les applique à chaque requête, donc aucun client ne peut les contourner : une partie doit commencer dans le futur, une partie pleine ne peut pas être rejointe, et seul l'hôte peut annuler.",
   ph4h:"Quatre tables derrière.",
   ph4p:"Utilisateurs, terrains et parties, plus une table de liaison qui relie les joueurs aux parties qu'ils ont rejointes. SQLite en développement, PostgreSQL en production.",
-  swAlt:"La carte SkyWatch YUL des avions au-dessus de Montréal avec une liste d'appareils",
-  n6:"Position ADS-B", n7:"Orienté selon son cap", n8:"Indicatif et pays", n9:"Altitude et tendance",
+  swAlt:"SkyWatch YUL suit les avions autour de Montréal sur une carte sombre de style radar, avec un profil vertical en dessous et une liste de vols",
+  n6:"Indicatif, altitude, vitesse", n7:"Sa position dans une minute", n8:"Deux vols, un seul point", n9:"22 000 pieds d'écart",
   codeAria:"La fonction get_flights de backend/main.py",
   simAria:"Simulation des navigateurs qui interrogent le backend et du backend qui appelle OpenSky",
-  capF:"Aperçu de l'application, données de démonstration", capG:"Carte, données de démonstration", capH:"Liste des appareils, données de démonstration", capI:"backend/main.py", capJ:"Simulation, accélérée 5×",
+  capF:"Le suivi, données réelles d'OpenSky", capG:"Carte, données réelles d'OpenSky", capH:"Profil vertical, données réelles d'OpenSky", capI:"backend/main.py", capJ:"Simulation, accélérée 5×",
   swKind:"Données en temps réel",
-  swSum:"Une carte en direct des avions au-dessus de Montréal, construite à partir des positions ADS-B du réseau OpenSky.",
-  sw1h:"Chaque avion de la région de Montréal.",
-  sw1p:"Les avions diffusent eux-mêmes leur position par ADS-B. La carte les affiche, oriente chaque marqueur selon le cap transmis et se met à jour toutes les 15 secondes.",
-  sw2h:"Les détails quand on les veut.",
-  sw2p:"On peut filtrer par indicatif ou par altitude minimale, et cliquer sur un avion pour voir son indicatif, son altitude, sa vitesse et son taux de montée.",
+  swSum:"Un suivi de vols en direct pour le ciel de Montréal, construit à partir de vraies données ADS-B du réseau OpenSky.",
+  sw1h:"Chaque avion, comme le voit un contrôleur.",
+  sw1p:"Chaque avion porte un bloc de données comme sur un écran de contrôle aérien : indicatif, altitude en centaines de pieds et vitesse sol. Les données arrivent toutes les 15 secondes, et entre deux mises à jour chaque avion continue d'avancer selon sa route, donc la carte ne se fige jamais.",
+  sw2h:"Une vue de côté, alignée sur la carte.",
+  sw2p:"Sous la carte, chaque avion est placé à son altitude, juste sous sa position sur la carte, même quand on la déplace ou qu'on zoome. On peut glisser le plancher ambré pour cacher le trafic bas, ou revenir sur les dix dernières minutes.",
   sw3h:"Tout tient dans une fonction.",
   sw3p:"Chaque navigateur interroge le backend FastAPI, jamais OpenSky directement. À chaque requête, le backend décide :",
   b1k:"Récent", b1:"Instantané de moins de 15 secondes ? On le renvoie.",
@@ -760,7 +760,7 @@ const french = {
 const english = {
   copied:"Copied", noCache:"no cache", viewersCanvas:"viewers",
   capA:"App preview, local demo", capB:"Map view, local demo", capC:"Upcoming runs, local demo", capD:"app/routers", capE:"app/models.py",
-  capF:"App preview, sample data", capG:"Map, sample data", capH:"Aircraft list, sample data", capI:"backend/main.py", capJ:"Simulation, sped up 5×"
+  capF:"The tracker, real OpenSky data", capG:"Map, real OpenSky data", capH:"Vertical profile, real OpenSky data", capI:"backend/main.py", capJ:"Simulation, sped up 5×"
 };
 
 const textEls = $$('[data-i18n]'), ariaEls = $$('[data-i18n-aria]'), altEls = $$('[data-i18n-alt]');
