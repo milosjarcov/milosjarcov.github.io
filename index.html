@@ -397,10 +397,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
           <div class="layer code" data-layer="api" id="L-api" aria-label="API routes and the status codes they return" data-i18n-aria="apiAria">
             <div class="code-head"><span>app/routers</span><span>FastAPI</span></div>
             <ol class="code-body">
-              <li><span class="m">POST</span><span class="p">/auth/register</span><span class="s"><b>201</b></span><span class="d" data-i18n="a1">New account, returns a JWT</span></li>
+              <li><span class="m">POST</span><span class="p">/auth/register</span><span class="s"><b>201</b> <b class="err">409</b></span><span class="d" data-i18n="a1">New account, returns a JWT. Conflict if the email is taken.</span></li>
               <li><span class="m">POST</span><span class="p">/auth/login</span><span class="s"><b>200</b></span><span class="d" data-i18n="a2">Checks the bcrypt hash, returns a JWT</span></li>
+              <li><span class="m">POST</span><span class="p">/auth/guest</span><span class="s"><b>201</b></span><span class="d" data-i18n="a9">Throwaway account for trying the app, returns a JWT</span></li>
               <li><span class="m">GET</span><span class="p">/courts</span><span class="s"><b>200</b></span><span class="d" data-i18n="a3">Every court with its coordinates</span></li>
-              <li><span class="m">GET</span><span class="p">/runs</span><span class="s"><b>200</b></span><span class="d" data-i18n="a4">Upcoming runs, optionally for one court</span></li>
+              <li><span class="m">GET</span><span class="p">/runs</span><span class="s"><b>200</b></span><span class="d" data-i18n="a4">Upcoming runs. Public, so players show by name only.</span></li>
               <li><span class="m">POST</span><span class="p">/runs</span><span class="s"><b>201</b> <b class="err">422</b></span><span class="d" data-i18n="a5">Host joins as the first player. Past start times are rejected.</span></li>
               <li><span class="m">POST</span><span class="p">/runs/{id}/join</span><span class="s"><b>200</b> <b class="err">409</b></span><span class="d" data-i18n="a6">Conflict if the run is full or you're already in</span></li>
               <li><span class="m">POST</span><span class="p">/runs/{id}/leave</span><span class="s"><b>200</b> <b class="err">409</b></span><span class="d" data-i18n="a7">Conflict if you're not in the run</span></li>
@@ -469,14 +470,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
       <div class="step" data-layer="api" data-cap="capD">
         <div class="step-in">
           <h4 data-i18n="ph3h">The rules live in the API.</h4>
-          <p data-i18n="ph3p">The FastAPI backend enforces them on every request, so no client can break them: runs must start in the future, full runs can't be joined, and only the host can cancel.</p>
+          <p data-i18n="ph3p">The FastAPI backend enforces them on every request, so no client can break them: runs must start in the future, full runs can't be joined, only the host can cancel, and public responses never include anyone's email.</p>
           <div class="slot" data-for="L-api"></div>
         </div>
       </div>
       <div class="step" data-layer="schema" data-cap="capE">
         <div class="step-in">
           <h4 data-i18n="ph4h">Four tables behind it.</h4>
-          <p data-i18n="ph4p">Users, courts and runs, plus a join table that links players to the runs they've joined. SQLite while developing, PostgreSQL in production.</p>
+          <p data-i18n="ph4p">Users, courts and runs, plus a join table that links players to the runs they've joined. Guests are ordinary users with a reserved example.com address, so they needed no new table. SQLite while developing, PostgreSQL in production.</p>
         </div>
       </div>
     </div>
@@ -698,8 +699,8 @@ const french = {
   phAlt:"Pickup Hoops avec le parc Jeanne-Mance ouvert dans le panneau latéral, ses parties à venir, et les sept terrains sur une carte de Montréal",
   n1:"Terrain sélectionné", n2:"Un des sept vrais parcs", n3:"4 places sur 10 prises", n4:"Rejoindre en invité en un clic",
   apiAria:"Les routes de l'API et les codes d'état qu'elles renvoient",
-  a1:"Nouveau compte, renvoie un JWT", a2:"Vérifie le hachage bcrypt, renvoie un JWT", a3:"Tous les terrains avec leurs coordonnées",
-  a4:"Parties à venir, pour un terrain au besoin", a5:"L'hôte devient le premier joueur. Les heures passées sont refusées.",
+  a1:"Nouveau compte, renvoie un JWT. Conflit si le courriel est déjà pris.", a2:"Vérifie le hachage bcrypt, renvoie un JWT", a9:"Compte jetable pour essayer l'application, renvoie un JWT", a3:"Tous les terrains avec leurs coordonnées",
+  a4:"Parties à venir. Route publique, donc les joueurs n'apparaissent que par leur nom.", a5:"L'hôte devient le premier joueur. Les heures passées sont refusées.",
   a6:"Conflit si la partie est pleine ou si vous y êtes déjà", a7:"Conflit si vous n'êtes pas dans la partie", a8:"Seul l'hôte peut annuler",
   schemaAria:"Schéma de la base de données : users, courts, runs et une table de liaison run_players",
   capA:"Aperçu de l'application, démo locale", capB:"Vue carte, démo locale", capC:"Parties à venir, démo locale", capD:"app/routers", capE:"app/models.py",
@@ -711,9 +712,9 @@ const french = {
   ph2h:"On voit qui joue, puis on publie une partie ou on en rejoint une.",
   ph2p:"Une partie a un terrain, une heure de début, un niveau et un nombre maximal de joueurs. Tout le monde peut explorer sans compte. Pour rejoindre ou publier une partie, on se connecte, ou on continue en invité en un clic. Les mots de passe sont hachés avec bcrypt, et l'API émet un JWT pour les requêtes qui en ont besoin.",
   ph3h:"Les règles vivent dans l'API.",
-  ph3p:"Le backend FastAPI les applique à chaque requête, donc aucun client ne peut les contourner : une partie doit commencer dans le futur, une partie pleine ne peut pas être rejointe, et seul l'hôte peut annuler.",
+  ph3p:"Le backend FastAPI les applique à chaque requête, donc aucun client ne peut les contourner : une partie doit commencer dans le futur, une partie pleine ne peut pas être rejointe, seul l'hôte peut annuler, et les réponses publiques ne contiennent jamais le courriel de personne.",
   ph4h:"Quatre tables derrière.",
-  ph4p:"Utilisateurs, terrains et parties, plus une table de liaison qui relie les joueurs aux parties qu'ils ont rejointes. SQLite en développement, PostgreSQL en production.",
+  ph4p:"Utilisateurs, terrains et parties, plus une table de liaison qui relie les joueurs aux parties qu'ils ont rejointes. Les invités sont des utilisateurs ordinaires avec une adresse réservée en example.com, donc aucune nouvelle table n'a été nécessaire. SQLite en développement, PostgreSQL en production.",
   swAlt:"SkyWatch YUL suit les avions autour de Montréal sur une carte sombre de style radar, avec un profil vertical en dessous et une liste de vols",
   n6:"Indicatif, altitude, vitesse", n7:"Sa position dans une minute", n8:"Deux vols, un seul point", n9:"22 000 pieds d'écart",
   codeAria:"La fonction get_flights de backend/main.py",
@@ -1017,6 +1018,7 @@ const sim = (function () {
 const apiFeed = (function () {
   const el = $('#cfeed');
   const examples = [
+    ['POST /auth/register', '409', 'Email already registered'],
     ['POST /runs', '422', 'Run must start in the future'],
     ['POST /runs/12/join', '409', 'Run is full'],
     ['POST /runs/12/join', '409', 'Already joined this run'],
