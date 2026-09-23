@@ -387,12 +387,11 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
         <figure class="frame">
           <div class="layer on" data-layer="shot">
             <div class="zoomwrap">
-              <img src="assets/pickup-hoops.jpg" width="1280" height="720" alt="Pickup Hoops app showing a map of Montréal basketball courts and a list of upcoming games" data-i18n-alt="phAlt">
-              <i class="note ring" data-step="1" style="left:70.7%;top:39.9%;width:3.44%;height:6.1%"><span data-i18n="n1">Starting soon</span></i>
-              <i class="note ring right" data-step="1" style="left:77.97%;top:30%;width:3.44%;height:6.1%"><span data-i18n="n2">2 runs posted</span></i>
-              <i class="note" data-step="2" style="left:2.03%;top:26.4%;width:5.4%;height:6.7%"><span data-i18n="n3">Start time</span></i>
-              <i class="note right" data-step="2" style="left:16.5%;top:30.4%;width:9.3%;height:4%"><span data-i18n="n4">Skill level</span></i>
-              <i class="note right" data-step="2" style="left:7.7%;top:35.3%;width:11.3%;height:2.9%"><span data-i18n="n5">8 of 10 spots filled</span></i>
+              <img src="assets/pickup-hoops.webp" width="1280" height="720" alt="Pickup Hoops with Jeanne-Mance Park open in the side panel, its upcoming runs listed, and all seven courts on a map of Montréal" data-i18n-alt="phAlt">
+              <i class="note ring left" data-step="1" style="left:68.96%;top:37.78%;width:3.06%;height:5.43%"><span data-i18n="n1">Selected court</span></i>
+              <i class="note ring" data-step="1" style="left:50.49%;top:56.67%;width:2.5%;height:4.44%"><span data-i18n="n2">One of seven real parks</span></i>
+              <i class="note ring" data-step="2" style="left:1.88%;top:51.98%;width:3.19%;height:5.68%"><span data-i18n="n3">4 of 10 spots taken</span></i>
+              <i class="note" data-step="2" style="left:21.04%;top:51.98%;width:5.14%;height:4.44%"><span data-i18n="n4">Guests can join in one tap</span></i>
             </div>
           </div>
           <div class="layer code" data-layer="api" id="L-api" aria-label="API routes and the status codes they return" data-i18n-aria="apiAria">
@@ -451,20 +450,20 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radiu
           <p class="label" data-i18n="phKind">Full-stack web app</p>
           <h3 class="p-title" id="ph-t">Pickup Hoops</h3>
           <p class="p-sum" data-i18n="phSum">Find and join pickup basketball games at real courts around Montréal.</p>
-          <p class="stack">React · Vite · Leaflet · FastAPI · SQLAlchemy · PostgreSQL</p>
+          <p class="stack">React · Vite · Leaflet · MapLibre · FastAPI · SQLAlchemy · PostgreSQL</p>
           <a class="u" href="https://github.com/milosjarcov/pickup-hoops" target="_blank" rel="noopener noreferrer"><span data-i18n="viewSource">View source</span><span class="ar" aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="step" data-layer="shot" data-zoom=".41,.1,.47,.62" data-cap="capB">
+      <div class="step" data-layer="shot" data-zoom=".42,.12,.5,.5" data-cap="capB">
         <div class="step-in">
           <h4 data-i18n="ph1h">It starts from the map.</h4>
-          <p data-i18n="ph1p">Seven real Montréal parks are seeded into the database with their coordinates and drawn on a Leaflet map. Pick a court to see what's happening there.</p>
+          <p data-i18n="ph1p">Seven real Montréal parks are seeded into the database with their coordinates and drawn on the map. Pick a court and it opens in the side panel, with its runs and who's playing.</p>
         </div>
       </div>
-      <div class="step" data-layer="shot" data-zoom="0,.07,.31,.42" data-cap="capC">
+      <div class="step" data-layer="shot" data-zoom="0,.216,.278,.426" data-cap="capC">
         <div class="step-in">
           <h4 data-i18n="ph2h">See who's playing, then post a run or join one.</h4>
-          <p data-i18n="ph2p">A run has a court, a start time, a skill level and a player limit. Accounts use email and password (hashed with bcrypt), and the API issues a JWT for the requests that need one.</p>
+          <p data-i18n="ph2p">A run has a court, a start time, a skill level and a player limit. Anyone can look around without an account. Joining or posting asks you to sign in, or to continue as a guest in one tap. Passwords are hashed with bcrypt, and the API issues a JWT for the requests that need one.</p>
         </div>
       </div>
       <div class="step" data-layer="api" data-cap="capD">
@@ -696,8 +695,8 @@ const french = {
   fGrad:"Diplomation", fGradV:"Automne 2027", fBased:"Basé à", fLang:"Langues", fLangV:"Anglais, français, serbe, roumain",
   emailMe:"M'écrire", cue:"Défiler",
   workHead:"Projets", workNote:"Deux projets, présentés étape par étape. Continuez à défiler et l'écran suit.",
-  phAlt:"L'application Pickup Hoops avec une carte des terrains de basketball de Montréal et une liste de parties à venir",
-  n1:"Commence bientôt", n2:"2 parties publiées", n3:"Heure de début", n4:"Niveau", n5:"8 places sur 10 prises",
+  phAlt:"Pickup Hoops avec le parc Jeanne-Mance ouvert dans le panneau latéral, ses parties à venir, et les sept terrains sur une carte de Montréal",
+  n1:"Terrain sélectionné", n2:"Un des sept vrais parcs", n3:"4 places sur 10 prises", n4:"Rejoindre en invité en un clic",
   apiAria:"Les routes de l'API et les codes d'état qu'elles renvoient",
   a1:"Nouveau compte, renvoie un JWT", a2:"Vérifie le hachage bcrypt, renvoie un JWT", a3:"Tous les terrains avec leurs coordonnées",
   a4:"Parties à venir, pour un terrain au besoin", a5:"L'hôte devient le premier joueur. Les heures passées sont refusées.",
@@ -708,9 +707,9 @@ const french = {
   phSum:"Trouver et rejoindre des parties de basketball libres sur de vrais terrains à Montréal.",
   viewSource:"Voir le code",
   ph1h:"Tout part de la carte.",
-  ph1p:"Sept vrais parcs de Montréal sont insérés dans la base de données avec leurs coordonnées et affichés sur une carte Leaflet. On choisit un terrain pour voir ce qui s'y passe.",
+  ph1p:"Sept vrais parcs de Montréal sont insérés dans la base de données avec leurs coordonnées et affichés sur la carte. On choisit un terrain et il s'ouvre dans le panneau latéral, avec ses parties et les joueurs inscrits.",
   ph2h:"On voit qui joue, puis on publie une partie ou on en rejoint une.",
-  ph2p:"Une partie a un terrain, une heure de début, un niveau et un nombre maximal de joueurs. Les comptes utilisent un courriel et un mot de passe (haché avec bcrypt), et l'API émet un JWT pour les requêtes qui en ont besoin.",
+  ph2p:"Une partie a un terrain, une heure de début, un niveau et un nombre maximal de joueurs. Tout le monde peut explorer sans compte. Pour rejoindre ou publier une partie, on se connecte, ou on continue en invité en un clic. Les mots de passe sont hachés avec bcrypt, et l'API émet un JWT pour les requêtes qui en ont besoin.",
   ph3h:"Les règles vivent dans l'API.",
   ph3p:"Le backend FastAPI les applique à chaque requête, donc aucun client ne peut les contourner : une partie doit commencer dans le futur, une partie pleine ne peut pas être rejointe, et seul l'hôte peut annuler.",
   ph4h:"Quatre tables derrière.",
