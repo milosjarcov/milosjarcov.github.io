@@ -17,6 +17,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Milos Jarcov","url":"https://milosjarcov.github.io","jobTitle":"Computer Science Student","affiliation":{"@type":"CollegeOrUniversity","name":"Concordia University"},"sameAs":["https://github.com/milosjarcov","https://www.linkedin.com/in/milosjarcov"]}
 </script>
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* =====================================================================
    Tokens. The springs are replaced at load by real spring curves
@@ -88,7 +89,7 @@ a:hover > .arr{transform:translate(2px,-2px)}
    Header
    ===================================================================== */
 .bar{position:fixed;inset:0 0 auto;z-index:50;height:64px;transition:background-color .3s,box-shadow .3s}
-.bar.scrolled{background:rgba(243,242,238,.94);box-shadow:0 1px 0 var(--line)}
+.bar.scrolled{background:var(--bg);box-shadow:0 1px 0 var(--line)}
 .bar-in{height:100%;display:flex;align-items:center;gap:30px}
 .brand{margin-right:auto;font-family:var(--display);font-weight:680;font-stretch:94%;font-size:20px;letter-spacing:-.025em;color:var(--ink);text-decoration:none}
 .nav{position:relative;display:flex;gap:28px}
@@ -107,7 +108,7 @@ a:hover > .arr{transform:translate(2px,-2px)}
 /* =====================================================================
    Hero: intro on the left, a hand of app screens on the right
    ===================================================================== */
-.hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:center;gap:clamp(24px,4vw,64px);min-height:min(100svh,820px);padding-top:100px;padding-bottom:24px}
+.hero{overflow-x:clip;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:center;gap:clamp(24px,4vw,64px);min-height:min(100svh,820px);padding-top:100px;padding-bottom:24px}
 .kicker{font-size:15px;color:var(--mute)}
 .hero h1{margin-top:14px;font-size:clamp(54px,7.4vw,108px);line-height:.92;letter-spacing:-.045em}
 .lead{margin-top:26px;max-width:28em;font-size:clamp(18px,1.5vw,21px);line-height:1.52;color:var(--ink2)}
@@ -576,7 +577,6 @@ a:hover > .arr{transform:translate(2px,-2px)}
 </div>
 
 <script>
-document.documentElement.classList.add('js');
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const $ = (s, r = document) => r.querySelector(s);
